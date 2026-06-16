@@ -11,7 +11,7 @@ export default function Listing() {
 
   return (
     <div>
-      <h1 className="tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
+      <h1 className="tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-white">
         Book Your Experience
       </h1>
       <p className="tw-text-center urbanist tw-text-brown tw-mt-2">
