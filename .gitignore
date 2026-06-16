@@ -1,0 +1,6 @@
+# Dev dependencies (not needed on the WordPress server)
+app/node_modules
+
+# OS / editor
+.DS_Store
+*.log

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eternel Booking — Dev</title>
+    <!--
+      Local dev only. In WordPress this config comes from wp_localize_script.
+      Set your values here to preview the widget with `npm run dev`.
+    -->
+    <script>
+      window.ETERNEL_BOOKING_CONFIG = {
+        apiBaseUrl: "http://localhost:3013",
+        stripeKey: "pk_test_replace_me",
+        rootId: "eternel-booking-root",
+      };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Unna:wght@400;700&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body style="margin: 0; background: #fbf7f0">
+    <div id="eternel-booking-root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

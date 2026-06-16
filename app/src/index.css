@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Unna:wght@400;700&family=Urbanist:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Scoped reset — applies ONLY inside our widget so we get sane defaults without
+ * Tailwind's global preflight touching the WordPress theme. Theme styles also
+ * can't easily leak in because we reset the essentials here and our utilities
+ * are marked important (scoped to #eternel-booking-root via tailwind config).
+ */
+#eternel-booking-root,
+#eternel-booking-root *,
+#eternel-booking-root *::before,
+#eternel-booking-root *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid #e5e7eb;
+}
+
+#eternel-booking-root {
+  font-family: "Urbanist", system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #4a3526;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+
+#eternel-booking-root h1,
+#eternel-booking-root h2,
+#eternel-booking-root h3,
+#eternel-booking-root h4 {
+  font-family: "Unna", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+#eternel-booking-root img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+#eternel-booking-root button {
+  font-family: inherit;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+#eternel-booking-root input,
+#eternel-booking-root select,
+#eternel-booking-root textarea {
+  font-family: inherit;
+  font-size: 100%;
+  color: inherit;
+}
+
+#eternel-booking-root a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.unna {
+  font-family: "Unna", Georgia, serif;
+}
+.urbanist {
+  font-family: "Urbanist", system-ui, sans-serif;
+}
+
+@keyframes eb-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-3px); }
+  40%, 60% { transform: translateX(3px); }
+}
+.animate-shake {
+  animation: eb-shake 0.4s ease-in-out;
+}
