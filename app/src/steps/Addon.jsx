@@ -24,7 +24,7 @@ export default function Addon() {
   return (
     <div>
       <BackButton onClick={back} />
-      <h1 className="tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
+      <h1 className="tw-text-3xl tablet:tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
         Select Add-on
       </h1>
 

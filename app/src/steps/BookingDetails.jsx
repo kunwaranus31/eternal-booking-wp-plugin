@@ -112,7 +112,7 @@ export default function BookingDetails() {
   return (
     <div>
       <BackButton onClick={back} />
-      <h1 className="tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
+      <h1 className="tw-text-3xl tablet:tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
         Booking Details
       </h1>
 

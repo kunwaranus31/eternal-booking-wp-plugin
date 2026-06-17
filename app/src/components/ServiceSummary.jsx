@@ -25,11 +25,11 @@ export default function ServiceSummary({
         className="tw-rounded-xl tw-border tw-border-sand tw-w-full s_phone:tw-h-60 laptop:tw-h-70 tw-object-cover"
       />
       <div className="tw-flex tw-items-center tw-justify-between tw-gap-4 tw-mt-3">
-        <h2 className="tw-text-3xl unna tw-text-white tw-capitalize tw-line-clamp-2">
+        <h2 className="tw-text-2xl laptop:tw-text-3xl unna tw-text-white tw-capitalize tw-line-clamp-2">
           {getField(service, "name", "No service selected")}
         </h2>
         {showPrice && (
-          <span className="tw-text-5xl unna tw-text-sand tw-whitespace-nowrap">
+          <span className="tw-text-4xl laptop:tw-text-5xl unna tw-text-sand tw-whitespace-nowrap">
             ${price || "--"}
           </span>
         )}

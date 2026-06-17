@@ -185,7 +185,7 @@ export default function Checkout() {
   return (
     <div>
       <BackButton onClick={back} />
-      <h1 className="tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
+      <h1 className="tw-text-3xl tablet:tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
         Complete Your Booking
       </h1>
       <p className="tw-text-center urbanist tw-text-brown tw-mt-1">

@@ -42,7 +42,7 @@ export default function ServicePage() {
 
   return (
     <div>
-      <h1 className="unna laptop:tw-text-5xl s_phone:tw-text-4xl tw-text-center tw-text-primary">
+      <h1 className="unna tw-text-3xl tablet:tw-text-4xl laptop:tw-text-5xl tw-text-center tw-text-primary">
         Book Your Experience
       </h1>
 

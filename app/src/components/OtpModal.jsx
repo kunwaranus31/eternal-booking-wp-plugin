@@ -97,15 +97,15 @@ export default function OtpModal({ onSuccess }) {
 
   return (
     <Modal open={open} onClose={closeModal} size="md" showClose={false}>
-      <div className="tw-p-6 tw-space-y-5">
+      <div className="tw-p-5 phone:tw-p-6 tw-space-y-5">
         <h3 className="tw-text-2xl unna tw-text-center tw-text-primary">
           Verify your email
         </h3>
-        <p className="tw-text-center urbanist tw-text-sm tw-text-brown">
+        <p className="tw-text-center urbanist tw-text-sm tw-text-brown tw-break-words">
           Enter the 6-digit code we sent to {guestInfo?.email}.
         </p>
 
-        <div className="tw-flex tw-justify-center tw-gap-2">
+        <div className="tw-flex tw-justify-center tw-gap-1.5 phone:tw-gap-2">
           {Array.from({ length: OTP_LENGTH }).map((_, i) => (
             <input
               key={i}
@@ -118,7 +118,7 @@ export default function OtpModal({ onSuccess }) {
               onKeyDown={(e) => onKeyDown(i, e)}
               onPaste={onPaste}
               disabled={isVerifyingGuestOtp}
-              className={`tw-w-11 tw-h-12 tw-text-center tw-text-2xl tw-font-bold tw-border-2 tw-rounded-xl tw-outline-none focus:tw-border-primary ${
+              className={`tw-w-9 phone:tw-w-11 tw-h-12 tw-text-center tw-text-xl phone:tw-text-2xl tw-font-bold tw-border-2 tw-rounded-xl tw-outline-none focus:tw-border-primary ${
                 error ? "tw-border-red" : "tw-border-sand"
               }`}
             />
