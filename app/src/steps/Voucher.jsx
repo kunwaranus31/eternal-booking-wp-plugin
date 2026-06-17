@@ -62,7 +62,7 @@ export default function Voucher() {
       ];
 
   return (
-    <div className="tw-max-w-lg tw-mx-auto tw-bg-white tw-border tw-border-sand tw-rounded-2xl tw-p-6 tw-text-center tw-shadow-sm">
+    <div id="booking-success-voucher" className="tw-max-w-lg tw-mx-auto tw-bg-white tw-border tw-border-sand tw-rounded-2xl tw-p-6 tw-text-center tw-shadow-sm">
       <CheckCircle2 className="tw-mx-auto tw-w-14 tw-h-14 tw-text-green-600" />
       <h2 className="tw-text-2xl unna tw-mt-2 tw-text-primary">
         {isPackage ? "Package Purchased!" : "Payment Successful!"}
