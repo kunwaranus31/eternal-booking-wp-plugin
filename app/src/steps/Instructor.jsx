@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Check } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetAvailableInstructors } from "@/hooks";
-import { isFourHand } from "@/utils/format";
+import { getField, isFourHand } from "@/utils/format";
 import { Button, BackButton, BrownPanel, Spinner } from "@/components/ui";
 import ServiceSummary from "@/components/ServiceSummary";
 
@@ -73,22 +72,29 @@ export default function Instructor() {
                     <button
                       key={inst?._id}
                       onClick={() => toggle(inst)}
-                      className={`tw-w-full tw-flex tw-items-center tw-gap-3 tw-p-3 tw-rounded-xl tw-border tw-transition tw-text-left ${
-                        active
-                          ? "tw-bg-sand tw-border-sand tw-text-primary"
-                          : "tw-bg-white tw-border-white tw-text-primary hover:tw-bg-sand/40"
+                      className={`tw-w-full tw-flex tw-items-center tw-gap-4 tw-p-3 tw-rounded-xl tw-text-left tw-transition tw-border-2 ${
+                        active ? "tw-bg-sand tw-border-white" : "tw-bg-white tw-border-sand"
                       }`}
                     >
+                      <span className="tw-w-5 tw-h-5 tw-border-2 tw-border-primary tw-rounded-full tw-flex tw-items-center tw-justify-center tw-shrink-0">
+                        {active && <span className="tw-w-3 tw-h-3 tw-bg-primary tw-rounded-full" />}
+                      </span>
                       <img
-                        src={inst?.image?.location || inst?.profileImage?.location}
+                        src={inst?.profilePicture?.location}
                         alt={inst?.name}
-                        className="tw-w-12 tw-h-12 tw-rounded-full tw-object-cover tw-bg-sand"
+                        className="tw-w-14 tw-h-14 tw-rounded-xl tw-object-cover tw-border-2 tw-border-sand tw-bg-sand"
                         onError={(e) => (e.currentTarget.style.visibility = "hidden")}
                       />
-                      <span className="urbanist tw-font-medium tw-flex-1">
-                        {inst?.name}
-                      </span>
-                      {active && <Check className="tw-w-5 tw-h-5" />}
+                      <div className="tw-min-w-0">
+                        <h4 className="unna tw-text-primary tw-text-xl tw-leading-tight">
+                          {inst?.name}
+                        </h4>
+                        {getField(inst, "headline") && (
+                          <p className="urbanist tw-text-sm tw-text-grey tw-font-semibold">
+                            {getField(inst, "headline")}
+                          </p>
+                        )}
+                      </div>
                     </button>
                   );
                 })}

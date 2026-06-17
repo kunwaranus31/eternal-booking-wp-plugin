@@ -87,9 +87,9 @@ export default function Voucher() {
 
       {appointment?._id && (
         <Button
-          variant="primary"
+          variant="secondary"
           icon={Download}
-          className="tw-w-full tw-mt-5"
+          className="tw-w-full tw-mt-5 unna tw-text-lg"
           onClick={handleDownload}
         >
           Download Voucher

@@ -62,8 +62,8 @@ export default function ConfirmPackage() {
               Back
             </Button>
             <Button
-              variant="primary"
-              className="tw-w-full"
+              variant="secondary"
+              className="tw-w-full unna tw-text-lg"
               onClick={() => goTo(STEPS.BOOKING_DETAILS)}
             >
               Buy Package

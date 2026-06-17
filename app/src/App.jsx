@@ -28,8 +28,8 @@ export default function App() {
   const Current = STEP_COMPONENTS[step] || Listing;
 
   return (
-    <div className="tw-w-full tw-bg-cream tw-text-primary">
-      <div className="tw-mx-auto tw-max-w-5xl tw-px-4 tw-py-8 animate-fade-in">
+    <div className="tw-w-full tw-bg-beige tw-text-primary">
+      <div className="tw-mx-auto tw-max-w-6xl tw-px-4 tw-py-8 animate-fade-in">
         <Current />
       </div>
     </div>

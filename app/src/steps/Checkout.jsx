@@ -286,8 +286,8 @@ export default function Checkout() {
         </div>
 
         <Button
-          variant="primary"
-          className="tw-w-full tw-mt-5 tw-text-lg"
+          variant="secondary"
+          className="tw-w-full tw-mt-5 unna tw-text-xl"
           disabled={!selectedMethod || isCreatingBooking}
           loading={isCreatingBooking}
           onClick={() => setShowConfirm(true)}

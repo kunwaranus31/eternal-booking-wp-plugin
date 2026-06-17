@@ -83,7 +83,7 @@ export default function SelectPackage() {
             <Button variant="ghostWhite" className="tw-w-full" onClick={back}>
               Back
             </Button>
-            <Button variant="primary" className="tw-w-full" onClick={handleNext}>
+            <Button variant="secondary" className="tw-w-full unna tw-text-lg" onClick={handleNext}>
               Next
             </Button>
           </div>

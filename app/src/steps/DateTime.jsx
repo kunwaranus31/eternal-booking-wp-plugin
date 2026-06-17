@@ -130,12 +130,12 @@ function Calendar({ value, onChange }) {
               key={iso}
               disabled={disabled}
               onClick={() => onChange(iso)}
-              className={`tw-h-9 tw-rounded-lg tw-text-sm tw-transition ${
+              className={`tw-h-9 tw-rounded-full tw-text-sm tw-transition ${
                 isSelected
-                  ? "tw-bg-primary tw-text-white"
+                  ? "tw-bg-sand tw-text-primary tw-font-bold"
                   : disabled
-                  ? "tw-text-brown/30"
-                  : "hover:tw-bg-sand tw-text-primary"
+                  ? "tw-text-grey/30"
+                  : "tw-bg-green/15 hover:tw-bg-sand/60 tw-text-primary"
               }`}
             >
               {d.date()}

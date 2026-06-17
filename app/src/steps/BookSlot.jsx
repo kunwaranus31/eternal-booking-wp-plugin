@@ -3,7 +3,7 @@ import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetPackages } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
 import { getField, firstImage, isFourHand } from "@/utils/format";
-import { Button, BackButton, BrownPanel } from "@/components/ui";
+import { Button, BackButton, BrownPanel, Pill } from "@/components/ui";
 
 /**
  * Experience entry step: pick Single Session (→ date/time) or Multiple Session
@@ -83,9 +83,9 @@ export default function BookSlot() {
           </div>
 
           <div className="tw-flex tw-gap-2 tw-flex-wrap tw-mt-3">
-            <Pill text={`${service?.duration} mins`} />
-            <Pill text={fourHand ? "Four-hand" : "Two-hand"} />
-            <Pill text={fourHand ? "2 instructors" : "1 instructor"} />
+            <Pill>{`${service?.duration} mins`}</Pill>
+            <Pill>{fourHand ? "Four-hand" : "Two-hand"}</Pill>
+            <Pill>{fourHand ? "2 instructors" : "1 instructor"}</Pill>
           </div>
 
           <p className="urbanist tw-text-white/90 tw-text-sm tw-mt-3">
@@ -118,7 +118,7 @@ export default function BookSlot() {
             <Button variant="ghostWhite" className="tw-w-full" onClick={back}>
               Back
             </Button>
-            <Button variant="primary" className="tw-w-full" onClick={handleNext}>
+            <Button variant="secondary" className="tw-w-full unna tw-text-lg" onClick={handleNext}>
               {session === "Multiple Session" ? "Buy Package" : "Book Now"}
             </Button>
           </div>
@@ -127,9 +127,3 @@ export default function BookSlot() {
     </div>
   );
 }
-
-const Pill = ({ text }) => (
-  <span className="tw-bg-white/15 tw-text-white tw-text-sm urbanist tw-px-3 tw-py-1 tw-rounded-full">
-    {text}
-  </span>
-);

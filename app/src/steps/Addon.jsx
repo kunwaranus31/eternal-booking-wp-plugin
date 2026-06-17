@@ -56,30 +56,28 @@ export default function Addon() {
                     <button
                       key={addon?._id}
                       onClick={() => toggle(addon?._id)}
-                      className={`tw-w-full tw-flex tw-items-center tw-gap-3 tw-p-3 tw-rounded-xl tw-border tw-transition tw-text-left ${
-                        active
-                          ? "tw-bg-sand tw-border-sand tw-text-primary"
-                          : "tw-bg-white tw-border-white tw-text-primary hover:tw-bg-sand/40"
+                      className={`tw-w-full tw-flex tw-items-center tw-justify-between tw-gap-2 tw-p-3 tw-rounded-xl tw-text-left tw-transition tw-border-2 ${
+                        active ? "tw-bg-sand tw-border-white" : "tw-bg-white tw-border-sand"
                       }`}
                     >
-                      <span
-                        className={`tw-w-5 tw-h-5 tw-rounded-full tw-border-2 tw-shrink-0 ${
-                          active ? "tw-bg-primary tw-border-primary" : "tw-border-brown"
-                        }`}
-                      />
-                      {firstImage(addon) && (
-                        <img
-                          src={firstImage(addon)}
-                          alt={getField(addon, "name")}
-                          className="tw-w-12 tw-h-12 tw-rounded-lg tw-object-cover"
-                        />
-                      )}
-                      <span className="urbanist tw-font-medium tw-flex-1">
-                        {getField(addon, "name")}
-                      </span>
-                      <span className="urbanist tw-font-semibold">
+                      <div className="tw-flex tw-items-center tw-gap-3 tw-min-w-0">
+                        <span className="tw-w-5 tw-h-5 tw-border-2 tw-border-primary tw-rounded-full tw-flex tw-items-center tw-justify-center tw-shrink-0">
+                          {active && <span className="tw-w-3 tw-h-3 tw-bg-primary tw-rounded-full" />}
+                        </span>
+                        {firstImage(addon) && (
+                          <img
+                            src={firstImage(addon)}
+                            alt={getField(addon, "name")}
+                            className="tw-w-15 tw-h-15 tw-rounded-xl tw-object-cover tw-border-2 tw-border-sand"
+                          />
+                        )}
+                        <h4 className="unna tw-text-primary tw-text-lg tw-leading-tight tw-line-clamp-2">
+                          {getField(addon, "name")}
+                        </h4>
+                      </div>
+                      <h3 className="unna tw-text-primary tw-text-2xl tw-font-bold tw-whitespace-nowrap">
                         +${convertToDollars(addon?.price)}
-                      </span>
+                      </h3>
                     </button>
                   );
                 })

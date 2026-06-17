@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Star, ArrowRight } from "lucide-react";
+import { Star, Hand, Clock, Info } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetServices, useGetPackages } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
@@ -11,15 +11,12 @@ export default function Listing() {
 
   return (
     <div>
-      <h1 className="tw-text-4xl laptop:tw-text-5xl unna tw-text-center tw-text-primary">
+      <h1 className="unna laptop:tw-text-5xl s_phone:tw-text-4xl tw-text-center tw-text-primary">
         Book Your Experience
       </h1>
-      <p className="tw-text-center urbanist tw-text-brown tw-mt-2">
-        Choose a single experience or a multi-session package
-      </p>
 
       {/* Tabs */}
-      <div className="tw-flex tw-justify-center tw-gap-2 tw-mt-6 tw-mb-8">
+      <div className="tw-flex tw-justify-center tw-gap-2 tw-mt-6 tw-mb-2">
         {[
           { key: "experiences", label: "Experiences" },
           { key: "packages", label: "Packages" },
@@ -27,10 +24,10 @@ export default function Listing() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`tw-px-6 tw-py-2 tw-rounded-full urbanist tw-font-medium tw-transition ${
+            className={`tw-px-8 tw-py-2 tw-rounded-full unna tw-text-lg tw-transition ${
               tab === t.key
                 ? "tw-bg-primary tw-text-white"
-                : "tw-bg-white tw-text-primary tw-border tw-border-brown/40"
+                : "tw-bg-white tw-text-primary tw-border tw-border-sand"
             }`}
           >
             {t.label}
@@ -38,7 +35,18 @@ export default function Listing() {
         ))}
       </div>
 
-      {tab === "experiences" ? <ExperiencesTab /> : <PackagesTab />}
+      <div key={tab} className="tw-py-6 animate-fade-in">
+        {tab === "experiences" ? <ExperiencesTab /> : <PackagesTab />}
+      </div>
+
+      <div className="tw-flex tw-justify-center tw-items-start tw-gap-2 tw-text-primary">
+        <Info size={16} className="tw-mt-1 tw-shrink-0" />
+        <p className="urbanist tw-text-base">
+          {tab === "experiences"
+            ? "Please note: Bookings must be made at least 24 hours in advance so we can prepare for your visit."
+            : "Add-ons are not included with multi-session packages."}
+        </p>
+      </div>
     </div>
   );
 }
@@ -78,43 +86,39 @@ function ExperienceCard({ service, onBook }) {
   const price = convertToDollars(service?.price);
   const fourHand = isFourHand(service?.type);
   return (
-    <div className="tw-flex tw-flex-col tw-bg-white tw-rounded-2xl tw-border tw-border-sand tw-overflow-hidden tw-shadow-sm hover:tw-shadow-md tw-transition">
+    <div className="tw-group tw-flex tw-flex-col tw-bg-white tw-rounded-2xl tw-border tw-border-sand tw-overflow-hidden tw-shadow-sm hover:tw-shadow-lg tw-transition tw-duration-300 hover:-tw-translate-y-1">
       <div className="tw-relative">
         <img
           src={firstImage(service)}
           alt={getField(service, "name")}
-          className="tw-w-full tw-h-44 tw-object-cover"
+          className="tw-w-full tw-h-48 tw-object-cover"
         />
-        <div className="tw-absolute tw-top-2 tw-right-2 tw-bg-black/70 tw-rounded-full tw-px-2 tw-py-1 tw-flex tw-items-center tw-gap-1">
+        <div className="tw-absolute tw-top-2 tw-right-2 tw-bg-black/70 tw-rounded-full tw-px-3 tw-py-1 tw-flex tw-items-center tw-gap-1 tw-border tw-border-white/20">
           <Star className="tw-w-3.5 tw-h-3.5 tw-text-yellow-400" fill="currentColor" />
           <span className="tw-text-white tw-text-xs tw-font-semibold">
-            {service?.averageRating ? `${service.averageRating}/5` : "New"}
+            {service?.averageRating ? `${service.averageRating}/5` : "No reviews yet"}
           </span>
         </div>
       </div>
-      <div className="tw-flex tw-flex-col tw-flex-1 tw-p-4">
+      <div className="tw-flex tw-flex-col tw-flex-1 tw-p-5">
         <div className="tw-flex tw-justify-between tw-gap-2 tw-items-start">
-          <h3 className="tw-text-xl unna tw-capitalize tw-line-clamp-2">
+          <h3 className="tw-text-xl unna tw-text-primary tw-capitalize tw-line-clamp-2">
             {getField(service, "name")}
           </h3>
-          <span className="tw-text-2xl unna tw-text-primary tw-whitespace-nowrap">
+          <span className="tw-text-3xl unna tw-text-primary tw-whitespace-nowrap">
             ${price}
           </span>
         </div>
-        <p className="urbanist tw-text-sm tw-text-brown tw-mt-1 tw-line-clamp-2">
+        <p className="urbanist tw-text-sm tw-text-grey tw-mt-2 tw-line-clamp-2">
           {getField(service, "description")}
         </p>
-        <ul className="urbanist tw-text-sm tw-text-primary/80 tw-mt-3 tw-space-y-1">
-          <li>• {service?.duration} minutes</li>
-          <li>• {fourHand ? "Four-hand · 2 instructors" : "Two-hand · 1 instructor"}</li>
-        </ul>
-        <Button
-          variant="brown"
-          icon={ArrowRight}
-          className="tw-mt-4 tw-w-full"
-          onClick={onBook}
-        >
-          Book Now
+        <div className="tw-flex tw-flex-wrap tw-gap-2 tw-mt-3">
+          <Tag icon={Clock}>{service?.duration} mins</Tag>
+          <Tag icon={Hand}>{fourHand ? "Four-hand · 2 instructors" : "Two-hand · 1 instructor"}</Tag>
+        </div>
+        <div className="tw-flex-1" />
+        <Button variant="secondary" className="tw-mt-5 tw-w-full unna tw-text-lg" onClick={onBook}>
+          Book Now →
         </Button>
       </div>
     </div>
@@ -153,45 +157,61 @@ function PackageCard({ group, onBook }) {
   const service = group?.service;
   const fourHand = isFourHand(service?.type);
   return (
-    <div className="tw-flex tw-flex-col tw-bg-white tw-rounded-2xl tw-border tw-border-sand tw-overflow-hidden tw-shadow-sm hover:tw-shadow-md tw-transition">
+    <div className="tw-flex tw-flex-col tw-bg-white tw-rounded-2xl tw-border tw-border-sand tw-overflow-hidden tw-shadow-sm hover:tw-shadow-lg tw-transition">
       <img
         src={firstImage(service)}
         alt={getField(service, "name")}
-        className="tw-w-full tw-h-44 tw-object-cover"
+        className="tw-w-full tw-h-48 tw-object-cover"
       />
-      <div className="tw-flex tw-flex-col tw-flex-1 tw-p-4">
-        <h3 className="tw-text-xl unna tw-capitalize">{getField(service, "name")}</h3>
-        <p className="urbanist tw-text-xs tw-text-brown tw-mt-0.5">
-          {service?.duration} mins · {fourHand ? "Four-hand" : "Two-hand"}
-        </p>
-        <div className="tw-mt-3 tw-space-y-1 tw-flex-1">
-          {group?.packages?.slice(0, 4).map((pkg) => (
+      <div className="tw-flex tw-flex-col tw-flex-1 tw-p-5">
+        <h3 className="tw-text-xl unna tw-text-primary tw-capitalize">
+          {getField(service, "name")}
+        </h3>
+        <div className="tw-flex tw-flex-wrap tw-gap-2 tw-mt-2">
+          <Tag icon={Hand}>{fourHand ? "Four-hand" : "Two-hand"}</Tag>
+          <Tag icon={Clock}>{service?.duration} mins</Tag>
+        </div>
+        <p className="urbanist tw-text-xl unna tw-text-primary tw-mt-4">Types of Packages</p>
+        <div className="tw-mt-2 tw-space-y-1 tw-flex-1 tw-max-h-40 tw-overflow-auto tw-pr-1">
+          {group?.packages?.map((pkg, i) => (
             <div
               key={pkg?._id}
-              className="tw-flex tw-justify-between tw-text-sm urbanist tw-border-b tw-border-sand tw-py-1"
+              className={`tw-flex tw-justify-between tw-items-start tw-gap-3 tw-py-2 ${
+                i < group.packages.length - 1 ? "tw-border-b tw-border-sand" : ""
+              }`}
             >
-              <span className="tw-text-primary">
-                {getField(pkg, "name")} ({pkg?.noOfSessions} sessions)
+              <div className="tw-flex tw-gap-2">
+                <span className="tw-w-2 tw-h-2 tw-rounded-full tw-bg-primary tw-mt-2 tw-shrink-0" />
+                <div>
+                  <p className="urbanist tw-font-bold tw-text-primary tw-break-all">
+                    {getField(pkg, "name")}
+                  </p>
+                  <p className="urbanist tw-text-sm tw-text-grey">
+                    {pkg?.noOfSessions} sessions
+                  </p>
+                </div>
+              </div>
+              <span className="unna tw-text-lg tw-text-primary tw-whitespace-nowrap">
+                ${convertToDollars(pkg?.price)}
               </span>
-              <span className="tw-font-semibold">${convertToDollars(pkg?.price)}</span>
             </div>
           ))}
         </div>
-        <Button
-          variant="brown"
-          icon={ArrowRight}
-          className="tw-mt-4 tw-w-full"
-          onClick={onBook}
-        >
-          Book Now
+        <Button variant="secondary" className="tw-mt-5 tw-w-full unna tw-text-lg" onClick={onBook}>
+          Book Now →
         </Button>
       </div>
     </div>
   );
 }
 
+const Tag = ({ icon: Icon, children }) => (
+  <span className="tw-bg-sand/40 tw-text-primary tw-text-xs tw-font-semibold urbanist tw-px-3 tw-py-1 tw-rounded-full tw-inline-flex tw-items-center tw-gap-1.5">
+    {Icon && <Icon className="tw-w-3.5 tw-h-3.5" />}
+    {children}
+  </span>
+);
+
 function Empty({ text }) {
-  return (
-    <div className="tw-text-center tw-py-16 tw-text-brown urbanist">{text}</div>
-  );
+  return <div className="tw-text-center tw-py-16 tw-text-grey urbanist">{text}</div>;
 }
