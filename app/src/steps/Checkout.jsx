@@ -193,7 +193,7 @@ export default function Checkout() {
       </p>
 
       <BrownPanel className="tw-mt-6 tw-mx-auto tw-max-w-2xl tw-text-white">
-        <h2 className="tw-text-2xl unna tw-border-b tw-border-white/30 tw-pb-2">
+        <h2 className="tw-text-2xl unna tw-border-b tw-border-white/30 tw-pb-2 tw-text-white">
           Booking Summary
         </h2>
         <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4 tw-pb-3 tw-border-b tw-border-white/30">

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Unna:wght@400;700&family=Urbanist:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gilda+Display&family=Nunito:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -21,9 +21,9 @@
 }
 
 #eternel-booking-root {
-  font-family: "Urbanist", system-ui, -apple-system, sans-serif;
+  font-family: "Nunito", system-ui, -apple-system, sans-serif;
   line-height: 1.5;
-  color: #4a3526;
+  color: #5f2915;
   text-align: left;
   -webkit-font-smoothing: antialiased;
 }
@@ -32,7 +32,7 @@
 #eternel-booking-root h2,
 #eternel-booking-root h3,
 #eternel-booking-root h4 {
-  font-family: "Unna", Georgia, serif;
+  font-family: "Gilda Display", Georgia, serif;
   font-weight: 400;
   line-height: 1.15;
 }
@@ -63,11 +63,13 @@
   text-decoration: none;
 }
 
+/* Class names kept (`unna`/`urbanist`) but mapped to the WordPress site fonts:
+   headings = Gilda Display, body = Nunito. */
 .unna {
-  font-family: "Unna", Georgia, serif;
+  font-family: "Gilda Display", Georgia, serif;
 }
 .urbanist {
-  font-family: "Urbanist", system-ui, sans-serif;
+  font-family: "Nunito", system-ui, sans-serif;
 }
 
 @keyframes eb-shake {

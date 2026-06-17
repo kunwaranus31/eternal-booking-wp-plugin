@@ -54,8 +54,8 @@ export default {
         green: "#16a636",
       },
       fontFamily: {
-        unna: ['"Unna"', "Georgia", "serif"],
-        urbanist: ['"Urbanist"', "system-ui", "sans-serif"],
+        unna: ['"Gilda Display"', "Georgia", "serif"],
+        urbanist: ['"Nunito"', "system-ui", "sans-serif"],
       },
       keyframes: {
         "fade-in": {
