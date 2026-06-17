@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name:       Eternel Booking
- * Plugin URI:        https://eternel-experiences.com
+ * Plugin URI:        https://apexwebstudios.net/
  * Description:        Guest booking flow (services & packages) for Eternel Experiences. Renders an embeddable React widget via the [eternel_booking] shortcode that talks to the Eternel API.
  * Version:           1.0.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
- * Author:            Eternel Experiences
+ * Author:            Apex Web Studios
  * License:           GPL-2.0-or-later
  * Text Domain:       eternel-booking
  *
