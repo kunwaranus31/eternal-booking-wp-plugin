@@ -20,6 +20,8 @@ export default function BookSlot() {
     setUserPackages,
     setPackageType,
     setDateTime,
+    setInstructor,
+    setAddons,
     goTo,
     back,
   } = useCheckout();
@@ -41,17 +43,26 @@ export default function BookSlot() {
     }
     setError("");
     if (session === "Single Session") {
+      // Single (experience) flow — clear any leftover package state so the
+      // checkout doesn't process this as a package.
+      setFlowType("experience");
+      setUserPackages(null);
+      setPackageType(null);
       setDateTime("", "");
       goTo(STEPS.DATE_TIME);
     } else {
-      // Multiple Session → package flow for this service.
+      // Multiple Session → package flow for this service. Clear any leftover
+      // experience-only selections.
       if (!matchingGroup) {
         setError("No packages are available for this experience.");
         return;
       }
+      setFlowType("package");
       setUserPackages(matchingGroup);
       setPackageType(null);
-      setFlowType("package");
+      setInstructor(null);
+      setAddons(null);
+      setDateTime("", "");
       goTo(STEPS.SELECT_PACKAGE);
     }
   };
@@ -99,6 +110,10 @@ export default function BookSlot() {
               onChange={(val) => {
                 setSession(val);
                 setError("");
+                // Switching session type resets the package selection so the two
+                // flows never cross-contaminate.
+                setPackageType(null);
+                setFlowType(val === "Single Session" ? "experience" : "package");
               }}
               options={[
                 { label: "Single Session", value: "Single Session" },
