@@ -18,10 +18,13 @@ function mount() {
   const el = document.getElementById(config.rootId);
   if (!el) return; // Shortcode not on this page.
 
+  // Optional: a single-service shortcode passes the service id as a data attribute.
+  const serviceId = el.dataset.serviceId || el.getAttribute("data-service-id") || null;
+
   createRoot(el).render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <CheckoutProvider>
+        <CheckoutProvider initialServiceId={serviceId}>
           <App />
           <ToastContainer position="top-right" autoClose={3500} newestOnTop />
         </CheckoutProvider>

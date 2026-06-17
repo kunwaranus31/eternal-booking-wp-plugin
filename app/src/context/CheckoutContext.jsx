@@ -14,6 +14,7 @@ import {
  */
 export const STEPS = {
   LISTING: "listing",
+  SERVICE: "service", // single-service landing card (shortcode service="<id>")
   BOOK_SLOT: "book-slot", // experience: session + summary
   DATE_TIME: "date-time",
   INSTRUCTOR: "instructor",
@@ -64,11 +65,15 @@ const loadState = () => {
 
 const CheckoutContext = createContext(null);
 
-export const CheckoutProvider = ({ children }) => {
+export const CheckoutProvider = ({ children, initialServiceId = null }) => {
   const [state, setState] = useState(loadState);
 
-  // Step stack (for back navigation). Always starts at listing on load.
-  const [stack, setStack] = useState([STEPS.LISTING]);
+  // When a single-service shortcode is used, the flow starts on the SERVICE card
+  // instead of the full LISTING. This is the "home" step for reset/back.
+  const rootStep = initialServiceId ? STEPS.SERVICE : STEPS.LISTING;
+
+  // Step stack (for back navigation). Starts at the root step on load.
+  const [stack, setStack] = useState([rootStep]);
   const step = stack[stack.length - 1];
 
   // Lightweight modal state (replaces the separate ModalContext).
@@ -95,10 +100,10 @@ export const CheckoutProvider = ({ children }) => {
     if (typeof window !== "undefined") window.scrollTo({ top: 0 });
   }, []);
 
-  const resetTo = useCallback((root = STEPS.LISTING) => {
+  const resetTo = useCallback((root = rootStep) => {
     setStack([root]);
     if (typeof window !== "undefined") window.scrollTo({ top: 0 });
-  }, []);
+  }, [rootStep]);
 
   // ── Modal ────────────────────────────────────────────
   const openModal = useCallback((type, data = null) => setModal({ type, data }), []);
@@ -108,9 +113,9 @@ export const CheckoutProvider = ({ children }) => {
   const resetCheckout = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
     setState(initialState);
-    setStack([STEPS.LISTING]);
+    setStack([rootStep]);
     setModal({ type: null, data: null });
-  }, []);
+  }, [rootStep]);
 
   const value = useMemo(
     () => ({
@@ -136,12 +141,15 @@ export const CheckoutProvider = ({ children }) => {
       back,
       resetTo,
       canGoBack: stack.length > 1,
+      // single-service mode
+      forcedServiceId: initialServiceId,
+      rootStep,
       // modal
       modal,
       openModal,
       closeModal,
     }),
-    [state, step, stack.length, modal, patch, goTo, back, resetTo, resetCheckout, openModal, closeModal]
+    [state, step, stack.length, modal, patch, goTo, back, resetTo, resetCheckout, openModal, closeModal, initialServiceId, rootStep]
   );
 
   return (

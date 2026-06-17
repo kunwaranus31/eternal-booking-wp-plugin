@@ -97,6 +97,12 @@ class Eternel_Booking_Shortcode {
 		$this->register_script();
 		wp_enqueue_script( self::HANDLE );
 
+		// Optional: [eternel_booking service="<id>"] renders just that one service
+		// and starts the flow from its card.
+		$atts    = shortcode_atts( array( 'service' => '' ), $atts, 'eternel_booking' );
+		$service = sanitize_text_field( $atts['service'] );
+		$data    = $service ? ' data-service-id="' . esc_attr( $service ) . '"' : '';
+
 		$missing = ! get_option( ETERNEL_BOOKING_OPT_API ) || ! get_option( ETERNEL_BOOKING_OPT_STRIPE );
 		$notice  = '';
 		if ( $missing && current_user_can( 'manage_options' ) ) {
@@ -107,6 +113,6 @@ class Eternel_Booking_Shortcode {
 
 		return $this->inline_css()
 			. $notice
-			. '<div id="' . esc_attr( self::ROOT_ID ) . '"></div>';
+			. '<div id="' . esc_attr( self::ROOT_ID ) . '"' . $data . '></div>';
 	}
 }

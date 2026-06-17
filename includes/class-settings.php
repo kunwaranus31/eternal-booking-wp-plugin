@@ -125,9 +125,98 @@ class Eternel_Booking_Settings {
 			</form>
 			<hr />
 			<h2><?php echo esc_html__( 'Usage', 'eternel-booking' ); ?></h2>
-			<p><?php echo esc_html__( 'Add this shortcode to any page or post to render the booking widget:', 'eternel-booking' ); ?></p>
+			<p><?php echo esc_html__( 'Add this shortcode to any page or post to render the full booking widget (services + packages):', 'eternel-booking' ); ?></p>
 			<code>[eternel_booking]</code>
+
+			<hr />
+			<h2><?php echo esc_html__( 'Per-service shortcodes', 'eternel-booking' ); ?></h2>
+			<p><?php echo esc_html__( 'Use one of these on its own page to show just that single service. "Book Now" runs the same flow (including Single / Multiple Session).', 'eternel-booking' ); ?></p>
+			<?php $this->render_services_list(); ?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Fetches services from the configured API (server-side, public endpoint) and
+	 * renders a copy-ready per-service shortcode for each.
+	 */
+	private function render_services_list() {
+		$api = get_option( ETERNEL_BOOKING_OPT_API, '' );
+		if ( ! $api ) {
+			echo '<p><em>' . esc_html__( 'Set the API Base URL above and save to load your services here.', 'eternel-booking' ) . '</em></p>';
+			return;
+		}
+
+		$response = wp_remote_get(
+			trailingslashit( $api ) . 'service?public=true',
+			array( 'timeout' => 15 )
+		);
+
+		if ( is_wp_error( $response ) ) {
+			echo '<p style="color:#b32d2e;">' . esc_html( sprintf( /* translators: %s: error message */ __( 'Could not reach the API: %s', 'eternel-booking' ), $response->get_error_message() ) ) . '</p>';
+			return;
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( $code < 200 || $code >= 300 || empty( $body['data'] ) ) {
+			echo '<p style="color:#b32d2e;">' . esc_html__( 'No services found, or the API returned an error.', 'eternel-booking' ) . '</p>';
+			return;
+		}
+
+		echo '<table class="widefat striped" style="max-width:780px;margin-top:10px;"><thead><tr>';
+		echo '<th>' . esc_html__( 'Service', 'eternel-booking' ) . '</th>';
+		echo '<th>' . esc_html__( 'Shortcode', 'eternel-booking' ) . '</th>';
+		echo '</tr></thead><tbody>';
+
+		foreach ( $body['data'] as $svc ) {
+			$id = isset( $svc['_id'] ) ? $svc['_id'] : '';
+			if ( ! $id ) {
+				continue;
+			}
+			$name      = $this->service_name( $svc );
+			$shortcode = '[eternel_booking service="' . $id . '"]';
+			echo '<tr>';
+			echo '<td>' . esc_html( $name ) . '</td>';
+			echo '<td>';
+			echo '<input type="text" readonly value="' . esc_attr( $shortcode ) . '" onclick="this.select()" style="width:330px;font-family:monospace;" /> ';
+			echo '<button type="button" class="button eb-copy" data-shortcode="' . esc_attr( $shortcode ) . '">' . esc_html__( 'Copy', 'eternel-booking' ) . '</button>';
+			echo '</td>';
+			echo '</tr>';
+		}
+
+		echo '</tbody></table>';
+		?>
+		<script>
+		(function () {
+			document.querySelectorAll('.eb-copy').forEach(function (btn) {
+				btn.addEventListener('click', function () {
+					var sc = btn.getAttribute('data-shortcode');
+					navigator.clipboard.writeText(sc).then(function () {
+						var old = btn.textContent;
+						btn.textContent = '<?php echo esc_js( __( 'Copied!', 'eternel-booking' ) ); ?>';
+						setTimeout(function () { btn.textContent = old; }, 1500);
+					});
+				});
+			});
+		})();
+		</script>
+		<?php
+	}
+
+	/**
+	 * Service name may be a plain string or a localized object { en, fr }.
+	 */
+	private function service_name( $svc ) {
+		$name = isset( $svc['name'] ) ? $svc['name'] : '';
+		if ( is_array( $name ) ) {
+			if ( ! empty( $name['en'] ) ) {
+				return $name['en'];
+			}
+			$first = reset( $name );
+			return $first ? $first : '(unnamed)';
+		}
+		return $name ? $name : '(unnamed)';
 	}
 }
