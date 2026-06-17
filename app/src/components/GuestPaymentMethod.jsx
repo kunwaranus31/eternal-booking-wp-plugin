@@ -117,7 +117,7 @@ export default function GuestPaymentMethod({ guestEmail, selectedMethod, setSele
           <p className="urbanist tw-text-sm tw-text-brown tw-mb-5">
             This payment method will be removed from your saved cards.
           </p>
-          <div className="tw-flex tw-gap-3">
+          <div className="tw-flex tw-flex-col phone:tw-flex-row tw-gap-3">
             <Button variant="outline" className="tw-w-full" onClick={() => setConfirmDelete(null)}>
               Cancel
             </Button>

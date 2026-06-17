@@ -91,7 +91,7 @@ export default function AddCardForm({ onClose, guestEmail, onAdded }) {
         </div>
       </div>
 
-      <div className="tw-flex tw-justify-end tw-gap-3 tw-pt-2">
+      <div className="tw-flex tw-flex-col phone:tw-flex-row phone:tw-justify-end tw-gap-3 tw-pt-2">
         <Button variant="outline" type="button" onClick={onClose} disabled={loading}>
           Cancel
         </Button>

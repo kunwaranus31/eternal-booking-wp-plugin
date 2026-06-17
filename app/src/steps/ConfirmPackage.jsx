@@ -57,7 +57,7 @@ export default function ConfirmPackage() {
             ))}
           </div>
 
-          <div className="tw-flex tw-gap-4 tw-mt-6">
+          <div className="tw-flex tw-flex-col tablet:tw-flex-row tw-gap-3 tw-mt-6">
             <Button variant="ghostWhite" className="tw-w-full" onClick={back}>
               Back
             </Button>

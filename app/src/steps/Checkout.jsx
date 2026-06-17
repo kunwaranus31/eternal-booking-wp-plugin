@@ -303,7 +303,7 @@ export default function Checkout() {
           <p className="urbanist tw-text-sm tw-text-brown tw-mb-5">
             You're about to pay ${convertToDollars(total)} for this booking.
           </p>
-          <div className="tw-flex tw-gap-3">
+          <div className="tw-flex tw-flex-col phone:tw-flex-row tw-gap-3">
             <Button variant="outline" className="tw-w-full" onClick={() => setShowConfirm(false)}>
               Cancel
             </Button>

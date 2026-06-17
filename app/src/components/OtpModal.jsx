@@ -143,7 +143,7 @@ export default function OtpModal({ onSuccess }) {
           )}
         </div>
 
-        <div className="tw-flex tw-gap-3 tw-pt-1">
+        <div className="tw-flex tw-flex-col phone:tw-flex-row tw-gap-3 tw-pt-1">
           <Button variant="outline" className="tw-w-full" onClick={closeModal}>
             Cancel
           </Button>

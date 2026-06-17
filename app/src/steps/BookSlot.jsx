@@ -2,8 +2,9 @@ import { useMemo, useState } from "react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetPackages } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
-import { getField, firstImage, isFourHand } from "@/utils/format";
+import { getField, isFourHand } from "@/utils/format";
 import { Button, BackButton, BrownPanel, Pill } from "@/components/ui";
+import Gallery from "@/components/Gallery";
 
 /**
  * Experience entry step: pick Single Session (→ date/time) or Multiple Session
@@ -64,11 +65,7 @@ export default function BookSlot() {
       <div className="tw-flex tw-flex-col laptop:tw-flex-row tw-gap-5 tw-mt-6">
         {/* Gallery */}
         <div className="tw-w-full laptop:tw-w-1/2">
-          <img
-            src={firstImage(service)}
-            alt={getField(service, "name")}
-            className="tw-w-full tw-h-72 tw-object-cover tw-rounded-2xl tw-border tw-border-sand"
-          />
+          <Gallery service={service} />
         </div>
 
         {/* Details */}
@@ -114,7 +111,7 @@ export default function BookSlot() {
             {error && <p className="tw-text-red tw-mt-2 urbanist">{error}</p>}
           </div>
 
-          <div className="tw-flex tw-gap-4 tw-mt-6">
+          <div className="tw-flex tw-flex-col tablet:tw-flex-row tw-gap-3 tw-mt-6">
             <Button variant="ghostWhite" className="tw-w-full" onClick={back}>
               Back
             </Button>
