@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetAvailableSlots } from "@/hooks";
 import { to24h } from "@/utils/helpers";
@@ -78,13 +79,20 @@ export default function DateTime() {
   );
 }
 
-/* ── Calendar locked to the CURRENT month only (no nav) ─ */
+/* ── Calendar limited to the next 30 days (today → +30) ─ */
 function Calendar({ value, onChange }) {
   const today = moment().startOf("day");
-  // Always the current month — no forward/backward navigation.
-  const cursor = moment().startOf("month");
+  const minDate = today; // earliest selectable = today
+  const maxDate = today.clone().add(30, "days"); // latest selectable = +30 days
 
-  const startDay = cursor.clone().startOf("week");
+  // The 30-day window can span the current + next month, so allow navigation
+  // ONLY between those months — nothing before minDate or after maxDate.
+  const [cursor, setCursor] = useState(today.clone().startOf("month"));
+
+  const prevDisabled = cursor.clone().isSameOrBefore(minDate, "month");
+  const nextDisabled = cursor.clone().isSameOrAfter(maxDate, "month");
+
+  const startDay = cursor.clone().startOf("month").startOf("week");
   const days = [];
   for (let i = 0; i < 42; i++) {
     days.push(startDay.clone().add(i, "days"));
@@ -92,8 +100,22 @@ function Calendar({ value, onChange }) {
 
   return (
     <div className="tw-bg-white tw-rounded-xl tw-p-3 tw-text-primary">
-      <div className="tw-flex tw-items-center tw-justify-center tw-mb-2">
+      <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
+        <button
+          disabled={prevDisabled}
+          onClick={() => setCursor(cursor.clone().subtract(1, "month").startOf("month"))}
+          className="tw-p-1 disabled:tw-opacity-30 disabled:tw-cursor-not-allowed"
+        >
+          <ChevronLeft className="tw-w-5 tw-h-5" />
+        </button>
         <span className="unna tw-text-lg">{cursor.format("MMMM YYYY")}</span>
+        <button
+          disabled={nextDisabled}
+          onClick={() => setCursor(cursor.clone().add(1, "month").startOf("month"))}
+          className="tw-p-1 disabled:tw-opacity-30 disabled:tw-cursor-not-allowed"
+        >
+          <ChevronRight className="tw-w-5 tw-h-5" />
+        </button>
       </div>
       <div className="tw-grid tw-grid-cols-7 tw-text-center tw-text-xs tw-text-brown tw-mb-1">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
@@ -103,10 +125,10 @@ function Calendar({ value, onChange }) {
       <div className="tw-grid tw-grid-cols-7 tw-gap-1">
         {days.map((d) => {
           const inMonth = d.month() === cursor.month();
-          const isPast = d.isBefore(today);
+          const outOfRange = d.isBefore(minDate, "day") || d.isAfter(maxDate, "day");
           const iso = d.format("YYYY-MM-DD");
           const isSelected = value === iso;
-          const disabled = isPast || !inMonth;
+          const disabled = outOfRange || !inMonth;
           return (
             <button
               key={iso}
