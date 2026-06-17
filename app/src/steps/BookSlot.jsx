@@ -5,6 +5,7 @@ import { convertToDollars } from "@/utils/helpers";
 import { getField, isFourHand } from "@/utils/format";
 import { Button, BackButton, BrownPanel, Pill } from "@/components/ui";
 import Gallery from "@/components/Gallery";
+import Dropdown from "@/components/Dropdown";
 
 /**
  * Experience entry step: pick Single Session (→ date/time) or Multiple Session
@@ -91,23 +92,19 @@ export default function BookSlot() {
 
           {/* Session dropdown */}
           <div className="tw-mt-5">
-            <label className="tw-block urbanist tw-text-sand tw-mb-1">
-              Choose session
-            </label>
-            <select
+            <Dropdown
+              title="Choose session"
+              placeholder="Choose duration"
               value={session || ""}
-              onChange={(e) => {
-                setSession(e.target.value);
+              onChange={(val) => {
+                setSession(val);
                 setError("");
               }}
-              className="tw-w-full tw-rounded-lg tw-bg-white tw-text-primary tw-px-4 tw-py-3 tw-outline-none"
-            >
-              <option value="" disabled>
-                Choose duration
-              </option>
-              <option value="Single Session">Single Session</option>
-              <option value="Multiple Session">Multiple Session (Package)</option>
-            </select>
+              options={[
+                { label: "Single Session", value: "Single Session" },
+                { label: "Multiple Session (Package)", value: "Multiple Session" },
+              ]}
+            />
             {error && <p className="tw-text-red tw-mt-2 urbanist">{error}</p>}
           </div>
 
