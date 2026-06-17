@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetAvailableSlots } from "@/hooks";
 import { to24h } from "@/utils/helpers";
@@ -79,39 +78,22 @@ export default function DateTime() {
   );
 }
 
-/* ── Minimal month calendar (future dates only) ──────── */
+/* ── Calendar locked to the CURRENT month only (no nav) ─ */
 function Calendar({ value, onChange }) {
   const today = moment().startOf("day");
-  const [cursor, setCursor] = useState(
-    value ? moment(value, "YYYY-MM-DD").startOf("month") : moment().startOf("month")
-  );
+  // Always the current month — no forward/backward navigation.
+  const cursor = moment().startOf("month");
 
-  const startOfMonth = cursor.clone().startOf("month");
-  const startDay = startOfMonth.clone().startOf("week");
+  const startDay = cursor.clone().startOf("week");
   const days = [];
   for (let i = 0; i < 42; i++) {
     days.push(startDay.clone().add(i, "days"));
   }
 
-  const canGoPrev = cursor.clone().subtract(1, "month").endOf("month").isSameOrAfter(today);
-
   return (
     <div className="tw-bg-white tw-rounded-xl tw-p-3 tw-text-primary">
-      <div className="tw-flex tw-items-center tw-justify-between tw-mb-2">
-        <button
-          disabled={!canGoPrev}
-          onClick={() => setCursor(cursor.clone().subtract(1, "month"))}
-          className="tw-p-1 disabled:tw-opacity-30"
-        >
-          <ChevronLeft className="tw-w-5 tw-h-5" />
-        </button>
+      <div className="tw-flex tw-items-center tw-justify-center tw-mb-2">
         <span className="unna tw-text-lg">{cursor.format("MMMM YYYY")}</span>
-        <button
-          onClick={() => setCursor(cursor.clone().add(1, "month"))}
-          className="tw-p-1"
-        >
-          <ChevronRight className="tw-w-5 tw-h-5" />
-        </button>
       </div>
       <div className="tw-grid tw-grid-cols-7 tw-text-center tw-text-xs tw-text-brown tw-mb-1">
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
@@ -131,10 +113,12 @@ function Calendar({ value, onChange }) {
               disabled={disabled}
               onClick={() => onChange(iso)}
               className={`tw-h-9 tw-rounded-full tw-text-sm tw-transition ${
-                isSelected
+                !inMonth
+                  ? "tw-invisible"
+                  : isSelected
                   ? "tw-bg-sand tw-text-primary tw-font-bold"
                   : disabled
-                  ? "tw-text-grey/30"
+                  ? "tw-text-grey/30 tw-cursor-not-allowed"
                   : "tw-bg-green/15 hover:tw-bg-sand/60 tw-text-primary"
               }`}
             >
