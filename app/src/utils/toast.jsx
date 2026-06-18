@@ -59,7 +59,7 @@ function ToastItem({ toast: t, onClose }) {
 
   return (
     <div
-      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-center tw-gap-3 tw-w-96 tw-max-w-[110vw] tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-3"
+      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-center tw-gap-3 tw-w-auto tw-max-w-[110vw] tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-3"
       role="alert"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
