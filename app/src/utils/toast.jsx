@@ -65,7 +65,7 @@ function ToastItem({ toast: t, onClose }) {
       onMouseLeave={() => setPaused(false)}
     >
       <Icon className="tw-w-7 tw-h-7 tw-shrink-0 tw-mt-0.5 tw-text-brown" />
-      <p className="urbanist tw-p-0 tw-text-lg tw-leading-normal tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
+      <p className="urbanist tw-p-0 tw-text-lg tw-leading-snug tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
         {t.message}
       </p>
       <span
