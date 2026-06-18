@@ -94,11 +94,13 @@ export default function BookingDetails() {
 
   // Summary rows
   const fourHand = isFourHand(summaryService?.type);
+  console.log("🚀 ~ BookingDetails ~ summaryService:", summaryService)
   const rows = isPackage
     ? [
         { title: "Package", text: getField(packageType, "name") },
         { title: "Service", text: getField(summaryService, "name") },
         { title: "Sessions", text: `${packageType?.noOfSessions} sessions` },
+        { title: "Duration", text: `${summaryService?.duration} mins` },
         { title: "Hand type", text: fourHand ? "Four-hand" : "Two-hand" },
       ]
     : [
