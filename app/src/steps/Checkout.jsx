@@ -212,7 +212,7 @@ export default function Checkout() {
                   maxLength={15}
                   className="tw-flex-1 tw-rounded-lg tw-bg-white tw-text-primary tw-px-4 tw-py-2.5 tw-outline-none"
                 />
-                <Button variant="secondary" loading={isApplyingCoupon} onClick={handleApplyCoupon}>
+                <Button variant="primary" loading={isApplyingCoupon} onClick={handleApplyCoupon}>
                   Apply
                 </Button>
               </div>
@@ -286,7 +286,7 @@ export default function Checkout() {
         </div>
 
         <Button
-          variant="secondary"
+          variant="primary"
           className="tw-w-full tw-mt-5 unna tw-text-xl"
           disabled={!selectedMethod || isCreatingBooking}
           loading={isCreatingBooking}

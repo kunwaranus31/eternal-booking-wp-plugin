@@ -184,7 +184,7 @@ export default function BookingDetails() {
             </div>
 
             <Button
-              variant="secondary"
+              variant="primary"
               className="tw-w-full tw-mt-5 unna tw-text-lg"
               loading={submitting || isInitiatingBooking}
               onClick={handleVerify}

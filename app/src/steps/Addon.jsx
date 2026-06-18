@@ -94,7 +94,7 @@ export default function Addon() {
             </div>
 
             <Button
-              variant="secondary"
+              variant="primary"
               className="tw-w-full tw-mt-5"
               onClick={handleContinue}
             >

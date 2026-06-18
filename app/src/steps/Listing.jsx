@@ -117,7 +117,7 @@ function ExperienceCard({ service, onBook }) {
           <Tag icon={Hand}>{fourHand ? "Four-hand · 2 instructors" : "Two-hand · 1 instructor"}</Tag>
         </div>
         <div className="tw-flex-1" />
-        <Button variant="secondary" className="tw-mt-5 tw-w-full unna tw-text-lg" onClick={onBook}>
+        <Button variant="primary" className="tw-mt-5 tw-w-full unna tw-text-lg" onClick={onBook}>
           Book Now →
         </Button>
       </div>
@@ -197,7 +197,7 @@ function PackageCard({ group, onBook }) {
             </div>
           ))}
         </div>
-        <Button variant="secondary" className="tw-mt-5 tw-w-full unna tw-text-lg" onClick={onBook}>
+        <Button variant="primary" className="tw-mt-5 tw-w-full unna tw-text-lg" onClick={onBook}>
           Book Now →
         </Button>
       </div>

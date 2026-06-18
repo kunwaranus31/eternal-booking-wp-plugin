@@ -141,7 +141,7 @@ export default function BookSlot() {
             <Button variant="ghostWhite" className="tw-w-full" onClick={back}>
               Back
             </Button>
-            <Button variant="secondary" className="tw-w-full unna tw-text-lg" onClick={handleNext}>
+            <Button variant="primary" className="tw-w-full unna tw-text-lg" onClick={handleNext}>
               {session === "Multiple Session" ? "Buy Package" : "Book Now"}
             </Button>
           </div>
