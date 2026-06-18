@@ -226,7 +226,7 @@ export default function Checkout() {
                       : `$${convertToDollars(discount)} off`}
                   </p>
                 </div>
-                <Button variant="brown" onClick={removeCoupon}>
+                <Button variant="primary" onClick={removeCoupon}>
                   Remove
                 </Button>
               </div>
@@ -307,7 +307,7 @@ export default function Checkout() {
             <Button variant="outline" className="tw-w-full" onClick={() => setShowConfirm(false)}>
               Cancel
             </Button>
-            <Button variant="brown" className="tw-w-full" onClick={handlePay}>
+            <Button variant="primary" className="tw-w-full" onClick={handlePay}>
               Confirm & Pay
             </Button>
           </div>

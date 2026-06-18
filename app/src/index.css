@@ -76,37 +76,44 @@
   font-family: "Nunito", system-ui, sans-serif;
 }
 
-/* Custom scrollbar — scoped to our widget only (add the `eb-scroll` class to a
-   scrollable container). Mirrors the main app: primary thumb on a sand track. */
-#eternel-booking-root .eb-scroll {
+/* Custom scrollbar — keyed off the `.eb-scroll` class (kept global, not scoped
+   to #eternel-booking-root, so portaled modals/toasts on <body> match too).
+   Mirrors the main app: primary thumb on a sand track. */
+.eb-scroll {
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: #5f2915 #e6c9b3;
 }
-#eternel-booking-root .eb-scroll::-webkit-scrollbar {
+.eb-scroll::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-track {
+.eb-scroll::-webkit-scrollbar-track {
   background: #e6c9b3;
   border-radius: 150px;
 }
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-thumb {
+.eb-scroll::-webkit-scrollbar-thumb {
   background: #5f2915;
   border-radius: 150px;
   border: 1px solid #e6c9b3;
 }
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-thumb:hover {
+.eb-scroll::-webkit-scrollbar-thumb:hover {
   background: #3e1b0b;
 }
-/* Hide top/bottom scrollbar arrows on EVERY scrollable area inside the widget
-   (Windows Chrome needs the explicit start/end pseudo-elements + zero sizing,
-   not just display:none). */
+/* Hide top/bottom scrollbar arrows on every scrollable area inside the widget
+   AND on portaled `.eb-scroll` elements (Windows Chrome needs the explicit
+   start/end pseudo-elements + zero sizing, not just display:none). */
 #eternel-booking-root ::-webkit-scrollbar-button,
 #eternel-booking-root ::-webkit-scrollbar-button:single-button,
 #eternel-booking-root ::-webkit-scrollbar-button:start:decrement,
 #eternel-booking-root ::-webkit-scrollbar-button:end:increment,
 #eternel-booking-root ::-webkit-scrollbar-button:vertical:start:increment,
-#eternel-booking-root ::-webkit-scrollbar-button:vertical:end:decrement {
+#eternel-booking-root ::-webkit-scrollbar-button:vertical:end:decrement,
+.eb-scroll::-webkit-scrollbar-button,
+.eb-scroll::-webkit-scrollbar-button:single-button,
+.eb-scroll::-webkit-scrollbar-button:start:decrement,
+.eb-scroll::-webkit-scrollbar-button:end:increment,
+.eb-scroll::-webkit-scrollbar-button:vertical:start:increment,
+.eb-scroll::-webkit-scrollbar-button:vertical:end:decrement {
   display: none;
   width: 0;
   height: 0;

@@ -148,7 +148,7 @@ export default function OtpModal({ onSuccess }) {
             Cancel
           </Button>
           <Button
-            variant="brown"
+            variant="primary"
             className="tw-w-full"
             disabled={otp.length !== OTP_LENGTH}
             loading={isVerifyingGuestOtp}

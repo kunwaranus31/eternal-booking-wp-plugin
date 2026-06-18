@@ -121,7 +121,7 @@ export default function GuestPaymentMethod({ guestEmail, selectedMethod, setSele
             <Button variant="outline" className="tw-w-full" onClick={() => setConfirmDelete(null)}>
               Cancel
             </Button>
-            <Button variant="brown" className="tw-w-full" loading={isDeleting} onClick={handleDelete}>
+            <Button variant="primary" className="tw-w-full" loading={isDeleting} onClick={handleDelete}>
               Remove
             </Button>
           </div>

@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { Loader2, ChevronLeft, X } from "lucide-react";
 
 /* ── Button (rounded-full, brand variants) ───────────── */
@@ -58,10 +59,12 @@ export const BackButton = ({ onClick, label = "Back" }) => (
 
 /* ── Modal (fixed overlay, stays inside widget scope) ─── */
 export const Modal = ({ open, onClose, children, size = "md", showClose = true }) => {
-  if (!open) return null;
+  if (!open || typeof document === "undefined") return null;
   const sizes = { sm: "tw-max-w-sm", md: "tw-max-w-md", lg: "tw-max-w-2xl" };
-  return (
-    <div className="tw-fixed tw-inset-0 tw-z-[99999] tw-flex tw-items-center tw-justify-center tw-p-4">
+  // Portaled to <body> so the fixed overlay escapes any ancestor that creates a
+  // stacking/containing context (transform/filter/overflow) from the WP theme.
+  return createPortal(
+    <div className="eb-scroll tw-fixed tw-inset-0 tw-z-[99999] tw-flex tw-items-center tw-justify-center tw-p-4">
       <div className="tw-absolute tw-inset-0 tw-bg-black/50" onClick={onClose} />
       <div
         className={`eb-scroll tw-relative tw-w-full ${sizes[size]} tw-bg-white tw-rounded-2xl tw-shadow-xl tw-max-h-[90vh] tw-overflow-auto`}
@@ -76,7 +79,8 @@ export const Modal = ({ open, onClose, children, size = "md", showClose = true }
         )}
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
