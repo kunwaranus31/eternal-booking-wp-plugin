@@ -4,6 +4,7 @@ import { useGetAvailableInstructors } from "@/hooks";
 import { getField, isFourHand } from "@/utils/format";
 import { Button, BackButton, BrownPanel, Spinner } from "@/components/ui";
 import ServiceSummary from "@/components/ServiceSummary";
+import { _images } from "../assets";
 
 export default function Instructor() {
   const { service, date, time, instructor, setInstructor, setAddons, goTo, back } =
@@ -65,7 +66,7 @@ export default function Instructor() {
                 <Spinner className="tw-w-6 tw-h-6 tw-text-white" />
               </div>
             ) : availableInstructors?.length > 0 ? (
-              <div className="tw-space-y-2 tw-max-h-96 tw-overflow-auto">
+              <div className="eb-scroll tw-space-y-2 tw-max-h-96 tw-overflow-auto tw-pr-1">
                 {availableInstructors.map((inst) => {
                   const active = selected.find((i) => i?._id === inst?._id);
                   return (
@@ -80,7 +81,7 @@ export default function Instructor() {
                         {active && <span className="tw-w-3 tw-h-3 tw-bg-primary tw-rounded-full" />}
                       </span>
                       <img
-                        src={inst?.profilePicture?.location}
+                        src={inst?.profilePicture?.location || _images?.instructor}
                         alt={inst?.name}
                         className="tw-w-14 tw-h-14 tw-rounded-xl tw-object-cover tw-border-2 tw-border-sand tw-bg-sand"
                         onError={(e) => (e.currentTarget.style.visibility = "hidden")}

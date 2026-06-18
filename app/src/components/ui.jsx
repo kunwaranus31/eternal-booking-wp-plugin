@@ -64,7 +64,7 @@ export const Modal = ({ open, onClose, children, size = "md", showClose = true }
     <div className="tw-fixed tw-inset-0 tw-z-[99999] tw-flex tw-items-center tw-justify-center tw-p-4">
       <div className="tw-absolute tw-inset-0 tw-bg-black/50" onClick={onClose} />
       <div
-        className={`tw-relative tw-w-full ${sizes[size]} tw-bg-white tw-rounded-2xl tw-shadow-xl tw-max-h-[90vh] tw-overflow-auto`}
+        className={`eb-scroll tw-relative tw-w-full ${sizes[size]} tw-bg-white tw-rounded-2xl tw-shadow-xl tw-max-h-[90vh] tw-overflow-auto`}
       >
         {showClose && (
           <button

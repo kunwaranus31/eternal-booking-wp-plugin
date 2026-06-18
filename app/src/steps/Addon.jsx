@@ -42,7 +42,7 @@ export default function Addon() {
           <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/10 tw-rounded-2xl tw-p-4 tw-flex tw-flex-col">
             <h3 className="tw-text-2xl unna tw-text-white tw-mb-3">Add-on Options</h3>
 
-            <div className="tw-flex-1 tw-space-y-2 tw-max-h-96 tw-overflow-auto">
+            <div className="eb-scroll tw-flex-1 tw-space-y-2 tw-max-h-96 tw-overflow-auto tw-pr-1">
               {isLoading ? (
                 <div className="tw-flex tw-justify-center tw-py-8">
                   <Spinner className="tw-w-6 tw-h-6 tw-text-white" />

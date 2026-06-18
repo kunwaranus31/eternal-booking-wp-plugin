@@ -74,7 +74,7 @@ export default function Voucher() {
         {getField(summaryService, "name")}
       </p>
 
-      <div className="tw-text-left tw-mt-4 tw-max-h-72 tw-overflow-auto tw-divide-y tw-divide-sand">
+      <div className="eb-scroll tw-text-left tw-mt-4 tw-max-h-72 tw-overflow-auto tw-divide-y tw-divide-sand tw-pr-1">
         {rows.map((r, i) => (
           <div key={i} className="tw-flex tw-justify-between tw-py-2">
             <span className="urbanist tw-text-sm tw-text-brown">{r.title}</span>

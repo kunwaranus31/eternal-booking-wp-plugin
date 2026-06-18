@@ -72,6 +72,29 @@
   font-family: "Nunito", system-ui, sans-serif;
 }
 
+/* Custom scrollbar — scoped to our widget only (add the `eb-scroll` class to a
+   scrollable container). Mirrors the main app: primary thumb on a sand track. */
+#eternel-booking-root .eb-scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #5f2915 #e6c9b3;
+}
+#eternel-booking-root .eb-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+#eternel-booking-root .eb-scroll::-webkit-scrollbar-track {
+  background: #e6c9b3;
+  border-radius: 150px;
+}
+#eternel-booking-root .eb-scroll::-webkit-scrollbar-thumb {
+  background: #5f2915;
+  border-radius: 150px;
+  border: 1px solid #e6c9b3;
+}
+#eternel-booking-root .eb-scroll::-webkit-scrollbar-thumb:hover {
+  background: #3e1b0b;
+}
+
 @keyframes eb-shake {
   10%, 90% { transform: translateX(-1px); }
   20%, 80% { transform: translateX(2px); }

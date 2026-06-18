@@ -5,6 +5,7 @@ import { convertToDollars, addMinutes, formatDate } from "@/utils/helpers";
 import { getField, firstImage, isFourHand } from "@/utils/format";
 import { Button, BackButton, BrownPanel, Field, InfoRow } from "@/components/ui";
 import OtpModal from "@/components/OtpModal";
+import PhoneInput from "@/components/PhoneInput";
 
 export default function BookingDetails() {
   const {
@@ -46,9 +47,12 @@ export default function BookingDetails() {
     if (!form.email.trim()) e.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       e.email = "Enter a valid email";
-    const phoneDigits = form.phone.replace(/\D/g, "");
-    if (!phoneDigits) e.phone = "Phone is required";
-    else if (phoneDigits.length !== 10) e.phone = "Phone must be 10 digits";
+    // Strip the +1 prefix before counting digits (matches the main app's
+    // createPhoneNumberValidation).
+    const phoneDigits = form.phone.replace(/^\+1/, "").replace(/\D/g, "");
+    if (!phoneDigits) e.phone = "Phone number is required";
+    else if (phoneDigits.length !== 10)
+      e.phone = "Phone number must be exactly 10 digits";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -56,6 +60,12 @@ export default function BookingDetails() {
   const onChange = (key) => (ev) => {
     const value = ev.target.value;
     const next = { ...form, [key]: value };
+    setForm(next);
+    setGuestInfo(next);
+  };
+
+  const onPhoneChange = (value) => {
+    const next = { ...form, phone: value };
     setForm(next);
     setGuestInfo(next);
   };
@@ -157,12 +167,10 @@ export default function BookingDetails() {
                   error={errors.email}
                   touched={!!errors.email}
                 />
-                <Field
+                <PhoneInput
                   label="Phone"
-                  type="tel"
-                  placeholder="5141234567"
                   value={form.phone}
-                  onChange={onChange("phone")}
+                  onChange={onPhoneChange}
                   error={errors.phone}
                   touched={!!errors.phone}
                 />

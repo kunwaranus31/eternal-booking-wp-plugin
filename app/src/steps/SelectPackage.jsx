@@ -46,7 +46,7 @@ export default function SelectPackage() {
 
         <BrownPanel className="tw-w-full laptop:tw-w-1/2">
           <h3 className="tw-text-2xl unna tw-text-white tw-mb-3">Types of Packages</h3>
-          <div className="tw-space-y-2 tw-max-h-96 tw-overflow-auto">
+          <div className="eb-scroll tw-space-y-2 tw-max-h-96 tw-overflow-auto tw-pr-1">
             {packages.map((pkg) => {
               const active = packageType?._id === pkg?._id;
               return (
