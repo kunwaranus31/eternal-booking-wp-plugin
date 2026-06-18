@@ -107,7 +107,7 @@ export default function Instructor() {
             )}
 
             <Button
-              variant="primary"
+              variant="secondary"
               className="tw-w-full tw-mt-5"
               disabled={selected.length !== required}
               onClick={handleContinue}
