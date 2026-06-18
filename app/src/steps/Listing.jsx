@@ -172,7 +172,7 @@ function PackageCard({ group, onBook }) {
           <Tag icon={Clock}>{service?.duration} mins</Tag>
         </div>
         <p className="urbanist tw-text-xl unna tw-text-primary tw-mt-4">Types of Packages</p>
-        <div className="eb-scroll tw-mt-2 tw-space-y-1 tw-flex-1 tw-max-h-40 tw-overflow-auto tw-pr-1">
+        <div className="eb-scroll tw-mt-2 tw-space-y-1 tw-flex-1 tw-max-h-40 tw-overflow-auto tw-pr-2">
           {group?.packages?.map((pkg, i) => (
             <div
               key={pkg?._id}

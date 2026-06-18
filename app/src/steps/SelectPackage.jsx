@@ -97,7 +97,7 @@ export default function SelectPackage() {
               Back
             </Button>
             <Button
-              variant="secondary"
+              variant="primary"
               className="tw-w-full unna tw-text-lg"
               onClick={handleNext}
               disabled={!packageType || packages.length === 0}
