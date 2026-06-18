@@ -133,3 +133,40 @@
 .animate-shake {
   animation: eb-shake 0.4s ease-in-out;
 }
+
+/* ── Toast (portaled to <body>, so these stay global/unscoped) ──────────────
+   Mirrors the main app's react-toastify: slide in from the right with a brown
+   progress bar counting down on a sand toast. */
+@keyframes eb-toast-in {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.eb-toast {
+  animation: eb-toast-in 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) both;
+}
+.eb-toast-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: #3e1b0b; /* brown — plugin theme */
+  transform-origin: left;
+  animation-name: eb-toast-bar;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes eb-toast-bar {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}

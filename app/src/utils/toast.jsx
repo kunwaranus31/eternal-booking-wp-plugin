@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CheckCircle2, XCircle, Info, X } from "lucide-react";
 
@@ -7,13 +7,17 @@ import { CheckCircle2, XCircle, Info, X } from "lucide-react";
  *
  * react-toastify relies on its own external stylesheet, which doesn't survive
  * reliably inside WordPress (CSS inlining / theme conflicts), so toasts rendered
- * invisibly. This replacement uses only our own `tw-` utilities — which are
- * always loaded with the plugin — so notifications show up everywhere.
+ * invisibly. This replacement reproduces the main app's react-toastify look —
+ * sand background, brown text/icon, a brown progress bar, slide-in, pause on
+ * hover — using only our own (always-loaded) styles, recoloured to the plugin's
+ * own theme tokens.
  *
  * Drop-in API: `toast.success(msg)`, `toast.error(msg)`, `toast.info(msg)`.
  */
 let listeners = [];
 let counter = 0;
+
+const AUTO_CLOSE = 4000;
 
 function emit(type, message) {
   if (!message) return;
@@ -27,36 +31,57 @@ export const toast = {
   info: (m) => emit("info", m),
 };
 
-const STYLES = {
-  success: { Icon: CheckCircle2, accent: "tw-border-l-green-600", icon: "tw-text-green-600" },
-  error: { Icon: XCircle, accent: "tw-border-l-red", icon: "tw-text-red" },
-  info: { Icon: Info, accent: "tw-border-l-primary", icon: "tw-text-primary" },
+const ICONS = {
+  success: CheckCircle2,
+  error: XCircle,
+  info: Info,
 };
 
 function ToastItem({ toast: t, onClose }) {
-  useEffect(() => {
-    const timer = setTimeout(onClose, 4000);
-    return () => clearTimeout(timer);
-  }, [onClose]);
+  const [paused, setPaused] = useState(false);
+  const remainingRef = useRef(AUTO_CLOSE);
+  const startRef = useRef(Date.now());
+  const timerRef = useRef(null);
 
-  const { Icon, accent, icon } = STYLES[t.type] || STYLES.info;
+  // Auto-dismiss, pausing the countdown while hovered (like react-toastify).
+  useEffect(() => {
+    if (paused) {
+      clearTimeout(timerRef.current);
+      remainingRef.current -= Date.now() - startRef.current;
+      return;
+    }
+    startRef.current = Date.now();
+    timerRef.current = setTimeout(onClose, Math.max(remainingRef.current, 0));
+    return () => clearTimeout(timerRef.current);
+  }, [paused, onClose]);
+
+  const Icon = ICONS[t.type] || Info;
 
   return (
     <div
-      className={`tw-pointer-events-auto tw-flex tw-items-start tw-gap-3 tw-w-80 tw-max-w-[90vw] tw-bg-white tw-rounded-lg tw-shadow-lg tw-border tw-border-sand tw-border-l-4 ${accent} tw-px-4 tw-py-3`}
+      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-start tw-gap-3 tw-w-80 tw-max-w-[90vw] tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-3"
       role="alert"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
-      <Icon className={`tw-w-5 tw-h-5 tw-shrink-0 tw-mt-0.5 ${icon}`} />
-      <p className="urbanist tw-text-sm tw-text-primary tw-flex-1 tw-break-words">
+      <Icon className="tw-w-5 tw-h-5 tw-shrink-0 tw-mt-0.5 tw-text-brown" />
+      <p className="urbanist tw-text-sm tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
         {t.message}
       </p>
       <button
         onClick={onClose}
-        className="tw-shrink-0 tw-text-grey/60 hover:tw-text-primary tw-transition-colors"
+        className="tw-shrink-0 tw-text-brown hover:tw-opacity-70 tw-transition-opacity"
         aria-label="Dismiss"
       >
         <X className="tw-w-4 tw-h-4" />
       </button>
+      <span
+        className="eb-toast-progress"
+        style={{
+          animationDuration: `${AUTO_CLOSE}ms`,
+          animationPlayState: paused ? "paused" : "running",
+        }}
+      />
     </div>
   );
 }
@@ -74,7 +99,7 @@ export function ToastHost() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const listener = (t) => setItems((prev) => [...prev, t]);
+    const listener = (t) => setItems((prev) => [t, ...prev]); // newest on top
     listeners.push(listener);
     return () => {
       listeners = listeners.filter((l) => l !== listener);
