@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { CheckCircle2, XCircle, Info, X } from "lucide-react";
 
 /**
@@ -63,6 +64,11 @@ function ToastItem({ toast: t, onClose }) {
 /**
  * Mount once near the app root. Renders fixed in the top-right corner with a
  * very high z-index so it sits above WordPress theme chrome.
+ *
+ * Portaled to `document.body` so the fixed container escapes any ancestor that
+ * establishes a stacking/containing context (e.g. `transform`, `filter`,
+ * `overflow`) from the WordPress theme — otherwise the toasts get clipped or
+ * pinned mid-page instead of the viewport corner.
  */
 export function ToastHost() {
   const [items, setItems] = useState([]);
@@ -77,11 +83,14 @@ export function ToastHost() {
 
   const remove = (id) => setItems((prev) => prev.filter((t) => t.id !== id));
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div className="tw-fixed tw-top-4 tw-right-4 tw-z-[99999] tw-flex tw-flex-col tw-gap-2 tw-pointer-events-none">
       {items.map((t) => (
         <ToastItem key={t.id} toast={t} onClose={() => remove(t.id)} />
       ))}
-    </div>
+    </div>,
+    document.body
   );
 }
