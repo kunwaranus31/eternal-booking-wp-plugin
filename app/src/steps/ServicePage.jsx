@@ -84,7 +84,7 @@ export default function ServicePage() {
             </div>
 
             <Button
-              variant="secondary"
+              variant="primary"
               className="tw-mt-6 tw-w-full unna tw-text-lg"
               onClick={handleBook}
             >
