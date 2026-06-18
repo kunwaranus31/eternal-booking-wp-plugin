@@ -1,8 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastHost } from "@/utils/toast";
 import "./index.css";
 import { config } from "@/config";
 import { CheckoutProvider } from "@/context/CheckoutContext";
@@ -26,7 +25,7 @@ function mount() {
       <QueryClientProvider client={queryClient}>
         <CheckoutProvider initialServiceId={serviceId}>
           <App />
-          <ToastContainer position="top-right" autoClose={3500} newestOnTop />
+          <ToastHost />
         </CheckoutProvider>
       </QueryClientProvider>
     </React.StrictMode>

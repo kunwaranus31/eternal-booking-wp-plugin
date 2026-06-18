@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { toast } from "@/utils/toast";
 import { bookingApi } from "@/api/bookingApi";
 
 /* ── Catalogue queries ───────────────────────────────── */

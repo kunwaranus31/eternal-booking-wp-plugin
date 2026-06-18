@@ -30,13 +30,30 @@ export default function Voucher() {
     window.open(bookingApi.voucherUrl(appointment._id), "_blank");
   };
 
+  // Pricing breakdown (cents). Shape matches the API: pricing.subtotal,
+  // pricing.discountAmount, pricing.taxes.{tps,tvq}.amount, pricing.total.
+  const discount = pricing?.discountAmount || 0;
+  const tps = pricing?.taxes?.tps?.amount;
+  const tvq = pricing?.taxes?.tvq?.amount;
+  const priceRows = [
+    pricing?.subtotal != null && {
+      title: "Subtotal",
+      text: `$${convertToDollars(pricing.subtotal)}`,
+    },
+    discount > 0 && {
+      title: "Discount",
+      text: `-$${convertToDollars(discount)}`,
+    },
+    tps != null && { title: "TPS (5%)", text: `$${convertToDollars(tps)}` },
+    tvq != null && { title: "TVQ (9.975%)", text: `$${convertToDollars(tvq)}` },
+  ].filter(Boolean);
+
   const rows = isPackage
     ? [
         { title: "Reference", text: booking?.refId || appointment?.refId || "-" },
         { title: "Package", text: getField(packageType, "name") },
         { title: "Service", text: getField(summaryService, "name") },
         { title: "Sessions", text: `${packageType?.noOfSessions} sessions` },
-        { title: "Total", text: pricing?.total ? `$${convertToDollars(pricing.total)}` : "-" },
       ]
     : [
         { title: "Booking No.", text: appointment?.refId || "-" },
@@ -55,10 +72,6 @@ export default function Voucher() {
               ? addons.map((a) => `${getField(a, "name")} (+$${convertToDollars(a?.price)})`).join(", ")
               : "None",
         },
-        {
-          title: "Total",
-          text: pricing?.total ? `$${convertToDollars(pricing.total)}` : "-",
-        },
       ];
 
   return (
@@ -74,7 +87,7 @@ export default function Voucher() {
         {getField(summaryService, "name")}
       </p>
 
-      <div className="eb-scroll tw-text-left tw-mt-4 tw-max-h-72 tw-overflow-auto tw-divide-y tw-divide-sand tw-pr-1">
+      <div className="eb-scroll tw-text-left tw-mt-4 tw-max-h-72 tw-overflow-auto tw-divide-y tw-divide-sand tw-pr-2">
         {rows.map((r, i) => (
           <div key={i} className="tw-flex tw-justify-between tw-py-2">
             <span className="urbanist tw-text-sm tw-text-brown">{r.title}</span>
@@ -83,6 +96,28 @@ export default function Voucher() {
             </span>
           </div>
         ))}
+
+        {/* Pricing breakdown */}
+        {priceRows.map((r, i) => (
+          <div key={`p-${i}`} className="tw-flex tw-justify-between tw-py-2">
+            <span className="urbanist tw-text-sm tw-text-brown">{r.title}</span>
+            <span
+              className={`urbanist tw-text-sm tw-font-medium tw-text-right tw-max-w-[60%] ${
+                r.title === "Discount" ? "tw-text-green-600" : "tw-text-primary"
+              }`}
+            >
+              {r.text}
+            </span>
+          </div>
+        ))}
+
+        {/* Total */}
+        <div className="tw-flex tw-justify-between tw-py-2">
+          <span className="unna tw-text-base tw-font-bold tw-text-primary">Total</span>
+          <span className="unna tw-text-base tw-font-bold tw-text-primary tw-text-right">
+            {pricing?.total != null ? `$${convertToDollars(pricing.total)}` : "-"}
+          </span>
+        </div>
       </div>
 
       {appointment?._id && (

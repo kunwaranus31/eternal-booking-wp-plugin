@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "@/utils/toast";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useApplyCoupon, useCreateBooking } from "@/hooks";
 import {

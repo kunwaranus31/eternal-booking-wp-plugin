@@ -6,7 +6,7 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-import { toast } from "react-toastify";
+import { toast } from "@/utils/toast";
 import { useAddGuestPaymentMethod } from "@/hooks";
 import { Button } from "@/components/ui";
 
