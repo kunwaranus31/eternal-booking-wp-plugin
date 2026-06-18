@@ -59,13 +59,13 @@ function ToastItem({ toast: t, onClose }) {
 
   return (
     <div
-      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-center tw-gap-3 tw-w-auto tw-max-w-96 tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-3"
+      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-center tw-gap-3 tw-w-80 tw-max-w-96 tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-3"
       role="alert"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <Icon className="tw-w-7 tw-h-7 tw-shrink-0 tw-mt-0.5 tw-text-brown" />
-      <p className="urbanist tw-p-0 tw-text-lg tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
+      <p className="urbanist tw-p-0 tw-text-lg tw-leading-normal tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
         {t.message}
       </p>
       <span

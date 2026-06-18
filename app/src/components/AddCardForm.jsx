@@ -68,7 +68,7 @@ export default function AddCardForm({ onClose, guestEmail, onAdded }) {
 
       <div>
         <label className="tw-block tw-mb-1 urbanist tw-text-sm">Card number</label>
-        <div className="tw-p-3 tw-rounded-lg tw-border tw-border-gray-medium">
+        <div className="tw-p-3 tw-rounded-lg tw-border-2 tw-border-primary tw-bg-primary/10">
           <CardNumberElement options={ELEMENT_OPTIONS} onChange={onElChange("number")} />
         </div>
         {errors.number && <p className="tw-text-red tw-text-sm tw-mt-1">{errors.number}</p>}
@@ -77,14 +77,14 @@ export default function AddCardForm({ onClose, guestEmail, onAdded }) {
       <div className="tw-flex tw-gap-4">
         <div className="tw-w-full">
           <label className="tw-block tw-mb-1 urbanist tw-text-sm">Expiry</label>
-          <div className="tw-p-3 tw-rounded-lg tw-border tw-border-gray-medium">
+          <div className="tw-p-3 tw-rounded-lg tw-border tw-border-primary tw-bg-primary/10">
             <CardExpiryElement options={ELEMENT_OPTIONS} onChange={onElChange("expiry")} />
           </div>
           {errors.expiry && <p className="tw-text-red tw-text-sm tw-mt-1">{errors.expiry}</p>}
         </div>
         <div className="tw-w-full">
           <label className="tw-block tw-mb-1 urbanist tw-text-sm">CVC</label>
-          <div className="tw-p-3 tw-rounded-lg tw-border tw-border-gray-medium">
+          <div className="tw-p-3 tw-rounded-lg tw-border tw-border-primary tw-bg-primary/10">
             <CardCvcElement options={ELEMENT_OPTIONS} onChange={onElChange("cvc")} />
           </div>
           {errors.cvc && <p className="tw-text-red tw-text-sm tw-mt-1">{errors.cvc}</p>}
