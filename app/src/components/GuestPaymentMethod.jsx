@@ -48,7 +48,7 @@ export default function GuestPaymentMethod({ guestEmail, selectedMethod, setSele
           <p className="urbanist">No saved cards yet.</p>
         </div>
       ) : (
-        <div className="eb-scroll tw-space-y-2 tw-max-h-56 tw-overflow-auto tw-pr-1">
+        <div className="eb-scroll tw-space-y-2 tw-max-h-56 tw-overflow-auto tw-pr-4">
           {cards.map((card) => {
             const active = selectedMethod === card.id;
             return (

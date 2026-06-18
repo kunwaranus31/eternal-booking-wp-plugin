@@ -66,7 +66,7 @@ export default function Instructor() {
                 <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
               </div>
             ) : availableInstructors?.length > 0 ? (
-              <div className="eb-scroll tw-space-y-2 tw-h-80 tw-overflow-auto tw-pr-1">
+              <div className="eb-scroll tw-space-y-2 tw-h-80 tw-overflow-auto tw-pr-4">
                 {availableInstructors.map((inst) => {
                   const active = selected.find((i) => i?._id === inst?._id);
                   return (

@@ -98,14 +98,15 @@
 #eternel-booking-root .eb-scroll::-webkit-scrollbar-thumb:hover {
   background: #3e1b0b;
 }
-/* Hide top/bottom scrollbar arrows (Windows Chrome needs the explicit
-   start/end pseudo-elements + zero sizing, not just display:none). */
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button,
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:single-button,
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:start:decrement,
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:end:increment,
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:vertical:start:increment,
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:vertical:end:decrement {
+/* Hide top/bottom scrollbar arrows on EVERY scrollable area inside the widget
+   (Windows Chrome needs the explicit start/end pseudo-elements + zero sizing,
+   not just display:none). */
+#eternel-booking-root ::-webkit-scrollbar-button,
+#eternel-booking-root ::-webkit-scrollbar-button:single-button,
+#eternel-booking-root ::-webkit-scrollbar-button:start:decrement,
+#eternel-booking-root ::-webkit-scrollbar-button:end:increment,
+#eternel-booking-root ::-webkit-scrollbar-button:vertical:start:increment,
+#eternel-booking-root ::-webkit-scrollbar-button:vertical:end:decrement {
   display: none;
   width: 0;
   height: 0;
