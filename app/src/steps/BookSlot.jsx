@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Clock, Hand, User, Users } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetPackages } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
@@ -92,9 +93,22 @@ export default function BookSlot() {
           </div>
 
           <div className="tw-flex tw-gap-2 tw-flex-wrap tw-mt-3">
-            <Pill>{`${service?.duration} mins`}</Pill>
-            <Pill>{fourHand ? "Four-hand" : "Two-hand"}</Pill>
-            <Pill>{fourHand ? "2 instructors" : "1 instructor"}</Pill>
+            <Pill>
+              <Clock className="tw-w-4 tw-h-4 tw-text-sand" />
+              {`${service?.duration} mins`}
+            </Pill>
+            <Pill>
+              <Hand className="tw-w-4 tw-h-4 tw-text-sand" />
+              {fourHand ? "Four-hand" : "Two-hand"}
+            </Pill>
+            <Pill>
+              {fourHand ? (
+                <Users className="tw-w-4 tw-h-4 tw-text-sand" />
+              ) : (
+                <User className="tw-w-4 tw-h-4 tw-text-sand" />
+              )}
+              {fourHand ? "2 instructors" : "1 instructor"}
+            </Pill>
           </div>
 
           <p className="urbanist tw-text-white/90 tw-text-sm tw-mt-3">

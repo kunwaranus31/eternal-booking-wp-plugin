@@ -21,7 +21,11 @@
 }
 
 #eternel-booking-root {
-  font-family: "Nunito", system-ui, -apple-system, sans-serif;
+  font-family:
+    "Nunito",
+    system-ui,
+    -apple-system,
+    sans-serif;
   line-height: 1.5;
   color: #5f2915;
   text-align: left;
@@ -95,17 +99,28 @@
   background: #3e1b0b;
 }
 /* Hide top/bottom scrollbar arrows */
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:start:decrement,
-#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:end:increment {
+#eternel-booking-root .eb-scroll::-webkit-scrollbar-button {
   display: none;
 }
 
-
 @keyframes eb-shake {
-  10%, 90% { transform: translateX(-1px); }
-  20%, 80% { transform: translateX(2px); }
-  30%, 50%, 70% { transform: translateX(-3px); }
-  40%, 60% { transform: translateX(3px); }
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-3px);
+  }
+  40%,
+  60% {
+    transform: translateX(3px);
+  }
 }
 .animate-shake {
   animation: eb-shake 0.4s ease-in-out;
