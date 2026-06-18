@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "@/utils/toast";
+import { getErrorMessage } from "@/utils/error";
 import { bookingApi } from "@/api/bookingApi";
 
 /* ── Catalogue queries ───────────────────────────────── */
@@ -112,11 +113,7 @@ export function useApplyCoupon() {
         toast.error(data?.data?.message || "Failed to apply coupon");
       }
     },
-    onError: (error) => {
-      toast.error(
-        error?.response?.data?.message || error?.message || "Error applying coupon"
-      );
-    },
+    onError: (error) => toast.error(getErrorMessage(error, "Error applying coupon")),
     retry: false,
   });
   return {
@@ -135,7 +132,7 @@ export function useInitiateGuestBooking() {
         throw new Error(res?.data?.message || "Failed to initiate guest booking");
       return res.data;
     },
-    onError: (err) => toast.error(err?.message || "Guest booking initiation failed"),
+    onError: (err) => toast.error(getErrorMessage(err, "Guest booking initiation failed")),
     onSuccess: (data) => {
       if (data?.message !== "Account Already Exists") {
         toast.success(data?.message || "OTP sent!");
@@ -157,7 +154,7 @@ export function useVerifyGuestOtp() {
         throw new Error(res?.data?.message || "OTP verification failed");
       return res.data;
     },
-    onError: (err) => toast.error(err?.message || "OTP verification failed"),
+    onError: (err) => toast.error(getErrorMessage(err, "OTP verification failed")),
     onSuccess: (data) => toast.success(data?.message || "OTP verified!"),
     retry: false,
   });
@@ -176,7 +173,7 @@ export function useAddGuestPaymentMethod() {
         throw new Error(res?.data?.message || "Failed to add card");
       return res.data;
     },
-    onError: (err) => toast.error(err?.message || "Failed to add card"),
+    onError: (err) => toast.error(getErrorMessage(err, "Failed to add card")),
     onSuccess: () => toast.success("Card added"),
     retry: false,
   });
@@ -194,7 +191,7 @@ export function useDeleteGuestPaymentMethod() {
         throw new Error(res?.data?.message || "Failed to delete card");
       return res.data;
     },
-    onError: (err) => toast.error(err?.message || "Failed to delete card"),
+    onError: (err) => toast.error(getErrorMessage(err, "Failed to delete card")),
     onSuccess: () => toast.success("Card removed"),
     retry: false,
   });
@@ -213,7 +210,7 @@ export function useCreateBooking() {
       toast.success(res?.data?.message || "Booking created successfully");
       return res.data.data; // { booking, appointment }
     },
-    onError: (err) => toast.error(err?.message || "Booking creation failed"),
+    onError: (err) => toast.error(getErrorMessage(err, "Booking creation failed")),
     retry: false,
   });
   return {
