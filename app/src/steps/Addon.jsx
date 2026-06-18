@@ -5,6 +5,7 @@ import { convertToDollars } from "@/utils/helpers";
 import { getField, firstImage } from "@/utils/format";
 import { Button, BackButton, BrownPanel, Spinner } from "@/components/ui";
 import ServiceSummary from "@/components/ServiceSummary";
+import InfoTooltip from "@/components/InfoTooltip";
 
 export default function Addon() {
   const { service, date, time, instructor, addons, setAddons, goTo, back } =
@@ -42,7 +43,7 @@ export default function Addon() {
           <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/10 tw-rounded-2xl tw-p-4 tw-flex tw-flex-col">
             <h3 className="tw-text-2xl unna tw-text-white tw-mb-3">Add-on Options</h3>
 
-            <div className="eb-scroll tw-flex-1 tw-space-y-2 tw-max-h-96 tw-overflow-auto tw-pr-1">
+            <div className="eb-scroll tw-flex-1 tw-space-y-2 tw-max-h-[430px] tw-overflow-auto tw-pr-2">
               {isLoading ? (
                 <div className="tw-flex tw-justify-center tw-py-8">
                   <Spinner className="tw-w-6 tw-h-6 tw-text-white" />
@@ -50,8 +51,9 @@ export default function Addon() {
               ) : !addonList?.length ? (
                 <p className="urbanist tw-text-white/80">No add-ons available.</p>
               ) : (
-                addonList.map((addon) => {
+                addonList.map((addon, idx) => {
                   const active = selected === addon?._id;
+                  const img = addon?.image?.location || firstImage(addon);
                   return (
                     <button
                       key={addon?._id}
@@ -64,20 +66,27 @@ export default function Addon() {
                         <span className="tw-w-5 tw-h-5 tw-border-2 tw-border-primary tw-rounded-full tw-flex tw-items-center tw-justify-center tw-shrink-0">
                           {active && <span className="tw-w-3 tw-h-3 tw-bg-primary tw-rounded-full" />}
                         </span>
-                        {firstImage(addon) && (
+                        {img && (
                           <img
-                            src={firstImage(addon)}
+                            src={img}
                             alt={getField(addon, "name")}
-                            className="tw-w-15 tw-h-15 tw-rounded-xl tw-object-cover tw-border-2 tw-border-sand"
+                            className="tw-w-12 tw-h-12 tw-rounded-xl tw-object-cover tw-border-2 tw-border-sand"
                           />
                         )}
                         <h4 className="unna tw-text-primary tw-text-lg tw-leading-tight tw-line-clamp-2">
                           {getField(addon, "name")}
                         </h4>
                       </div>
-                      <h3 className="unna tw-text-primary tw-text-2xl tw-font-bold tw-whitespace-nowrap">
-                        +${convertToDollars(addon?.price)}
-                      </h3>
+                      <div className="tw-flex tw-items-center tw-gap-2 tw-shrink-0">
+                        <h3 className="unna tw-text-primary tw-text-2xl tw-font-bold tw-whitespace-nowrap">
+                          +${convertToDollars(addon?.price)}
+                        </h3>
+                        <InfoTooltip
+                          title={getField(addon, "name")}
+                          description={getField(addon, "description")}
+                          openUp={idx >= addonList.length - 2}
+                        />
+                      </div>
                     </button>
                   );
                 })

@@ -37,12 +37,12 @@ export default {
     extend: {
       colors: {
         // Exact tokens copied from the main app's index.css @theme
-        primary: "#5f2915",
+        primary: "#3c190e",
         secondary: "#c78c4e",
         brown: "#3e1b0b",
         "dark-brown": "#3c190e",
         "normal-brown": "#c97f4b",
-        sand: "#e6c9b3",
+        sand: "#ffd588",
         almond: "#eedaca",
         cream: "#fef0e5",
         beige: "#f8f3ed",

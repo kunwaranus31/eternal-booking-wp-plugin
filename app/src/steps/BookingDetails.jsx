@@ -103,7 +103,8 @@ export default function BookingDetails() {
       ]
     : [
         { title: "Service", text: getField(service, "name") },
-        { title: "Date & Time", text: `${formatDate(date)}, ${addMinutes(time)}` },
+        { title: "Date", text: `${formatDate(date)}` },
+        { title: "Time", text: `${addMinutes(time)}` },
         {
           title: instructor?.length > 1 ? "Instructors" : "Instructor",
           text: instructor?.map((i) => i?.name).join(", ") || "-",
@@ -150,6 +151,7 @@ export default function BookingDetails() {
             <div className="tw-space-y-3">
               <Field
                 label="Full name"
+                required
                 placeholder="Jane Doe"
                 value={form.fullName}
                 onChange={onChange("fullName")}
@@ -160,6 +162,7 @@ export default function BookingDetails() {
               <div className="tw-flex tw-flex-col laptop:tw-flex-row tw-gap-3">
                 <Field
                   label="Email"
+                  required
                   type="email"
                   placeholder="jane@email.com"
                   value={form.email}
@@ -169,6 +172,7 @@ export default function BookingDetails() {
                 />
                 <PhoneInput
                   label="Phone"
+                  required
                   value={form.phone}
                   onChange={onPhoneChange}
                   error={errors.phone}

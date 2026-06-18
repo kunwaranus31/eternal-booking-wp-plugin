@@ -39,13 +39,13 @@ export default function ServiceSummary({
         <InfoRow title="Duration" text={`${service?.duration} minutes`} />
         <InfoRow
           title="Hand type"
-          text={fourHand ? "Four-hand service" : "Two-hand service"}
+          text={fourHand ? "4 hand - Two instructors" : "2 hand - One instructor"}
         />
-        <InfoRow
+        {/* <InfoRow
           title={fourHand ? "Instructors" : "Instructor"}
           text={fourHand ? "Two instructors" : "One instructor"}
           fullWidth
-        />
+        /> */}
 
         {date && (
           <InfoRow

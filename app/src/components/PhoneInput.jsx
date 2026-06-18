@@ -1,6 +1,8 @@
+import { _images } from "../assets";
+
 /**
  * Canadian phone input matching the main app's ShopInput tel field:
- *  - shows a "+1" prefix
+ *  - shows the Canada flag + a "+1" prefix
  *  - formats the entered digits as (XXX) XXX-XXXX
  *  - stores the value as "+1XXXXXXXXXX" (or "" when empty)
  */
@@ -31,7 +33,7 @@ export default function PhoneInput({ label, required, value, onChange, error, to
         </label>
       )}
       <div className="tw-w-full tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-rounded-md tw-bg-white/95 tw-mt-2">
-        <span className="tw-text-lg tw-leading-none">🇨🇦</span>
+        <img src={_images.canadaFlag} alt="CA" className="tw-w-6 tw-h-4 tw-object-contain" />
         <span className="tw-text-lg tw-text-black">+1</span>
         <span className="tw-h-5 tw-w-px tw-bg-black/20" />
         <input

@@ -94,6 +94,12 @@
 #eternel-booking-root .eb-scroll::-webkit-scrollbar-thumb:hover {
   background: #3e1b0b;
 }
+/* Hide top/bottom scrollbar arrows */
+#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:start:decrement,
+#eternel-booking-root .eb-scroll::-webkit-scrollbar-button:end:increment {
+  display: none;
+}
+
 
 @keyframes eb-shake {
   10%, 90% { transform: translateX(-1px); }
