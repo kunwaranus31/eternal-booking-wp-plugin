@@ -59,22 +59,22 @@ function ToastItem({ toast: t, onClose }) {
 
   return (
     <div
-      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-start tw-gap-3 tw-w-80 tw-max-w-[90vw] tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-3"
+      className="eb-toast tw-pointer-events-auto tw-relative tw-flex tw-items-center tw-gap-3 tw-w-80 tw-max-w-[90vw] tw-bg-sand tw-text-brown tw-rounded-lg tw-shadow-lg tw-overflow-hidden tw-pl-4 tw-pr-3 tw-py-1"
       role="alert"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <Icon className="tw-w-5 tw-h-5 tw-shrink-0 tw-mt-0.5 tw-text-brown" />
-      <p className="urbanist tw-text-sm tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
+      <Icon className="tw-w-7 tw-h-7 tw-shrink-0 tw-mt-0.5 tw-text-brown" />
+      <p className="urbanist tw-text-lg tw-font-semibold tw-text-brown tw-flex-1 tw-break-words">
         {t.message}
       </p>
-      <button
+      <span
         onClick={onClose}
-        className="tw-shrink-0 tw-text-brown hover:tw-opacity-70 tw-transition-opacity"
+        className="tw-shrink-0 tw-text-brown hover:tw-opacity-70 tw-transition-opacity tw-border-none tw-bg-none tw-cursor-pointer"
         aria-label="Dismiss"
       >
         <X className="tw-w-4 tw-h-4" />
-      </button>
+      </span>
       <span
         className="eb-toast-progress"
         style={{
