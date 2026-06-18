@@ -42,11 +42,11 @@ export default function ConfirmPackage() {
         </div>
 
         <BrownPanel className="tw-w-full laptop:tw-w-1/2">
-          <div className="tw-flex tw-justify-between tw-items-center tw-border-b tw-border-white/30 tw-pb-3">
-            <h2 className="tw-text-2xl unna tw-text-white">
+          <div className="tw-flex tw-justify-between tw-items-center tw-border-b tw-border-primary/30 tw-pb-3">
+            <h2 className="tw-text-2xl unna tw-text-primary">
               {getField(packageType, "name")}
             </h2>
-            <span className="tw-text-4xl unna tw-text-sand">
+            <span className="tw-text-4xl unna tw-text-secondary">
               ${convertToDollars(packageType?.price)}
             </span>
           </div>

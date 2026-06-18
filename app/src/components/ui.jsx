@@ -9,7 +9,7 @@ const VARIANTS = {
   outline:
     "tw-bg-black/10 tw-border tw-border-black tw-text-black hover:tw-bg-primary hover:tw-text-white",
   ghostWhite:
-    "tw-bg-white/20 tw-text-white tw-border tw-border-white hover:tw-bg-white/30",
+    "tw-bg-primary/5 tw-text-primary tw-border tw-border-primary/40 hover:tw-bg-primary/10",
   text: "tw-bg-transparent tw-text-primary hover:tw-underline hover:tw-opacity-70",
 };
 
@@ -84,13 +84,13 @@ export const Modal = ({ open, onClose, children, size = "md", showClose = true }
 export const Field = ({ label, error, touched, required, className = "", ...props }) => (
   <div className="tw-w-full">
     {label && (
-      <label className="tw-text-lg urbanist tw-font-semibold tw-text-white">
+      <label className="tw-text-lg urbanist tw-font-semibold tw-text-primary">
         {label}
-        {required && <span className="tw-text-white tw-ml-1">*</span>}
+        {required && <span className="tw-text-red tw-ml-1">*</span>}
       </label>
     )}
     <input
-      className={`tw-w-full tw-text-lg tw-px-4 tw-py-2 tw-rounded-md tw-text-black tw-bg-white/95 focus:tw-outline-none tw-mt-2 ${className}`}
+      className={`tw-w-full tw-text-lg tw-px-4 tw-py-2 tw-rounded-md tw-text-black tw-bg-white focus:tw-outline-none tw-mt-2 tw-border tw-border-[#f0dcae] ${className}`}
       {...props}
     />
     {touched && error && (
@@ -102,19 +102,19 @@ export const Field = ({ label, error, touched, required, className = "", ...prop
 /* ── Info row (label + value) — matches ServiceInfoBox ─ */
 export const InfoRow = ({ title, text, fullWidth = false }) => (
   <div
-    className={`tw-p-2 tw-rounded-lg tw-border tw-border-white tw-mt-3 tw-bg-black/20 tw-w-full tw-break-words ${
+    className={`tw-p-2 tw-rounded-lg tw-border tw-border-[#f0dcae] tw-mt-3 tw-bg-white/60 tw-w-full tw-break-words ${
       fullWidth ? "tw-col-span-2" : ""
     }`}
   >
-    <p className="urbanist tw-font-bold tw-text-sand">{title}</p>
-    <p className="urbanist tw-text-white">{text}</p>
+    <p className="urbanist tw-font-bold tw-text-secondary">{title}</p>
+    <p className="urbanist tw-text-primary">{text}</p>
   </div>
 );
 
-/* ── Brown gradient panel — matches ShopBrownWrapper ─── */
+/* ── Soft cream panel (was the brown gradient) ───────── */
 export const BrownPanel = ({ className = "", children }) => (
   <div
-    className={`tw-bg-gradient-to-br tw-from-[#623b27] tw-to-[#362119] tw-rounded-2xl tw-w-full tw-h-fit tw-p-4 laptop:tw-p-6 ${className}`}
+    className={`tw-bg-gradient-to-br tw-from-[#fffaf0] tw-to-[#ffecc5] tw-border tw-border-[#f3deb0] tw-rounded-2xl tw-w-full tw-h-fit tw-p-4 laptop:tw-p-6 ${className}`}
   >
     {children}
   </div>
@@ -123,7 +123,7 @@ export const BrownPanel = ({ className = "", children }) => (
 /* ── Pill tag (sand/20) ──────────────────────────────── */
 export const Pill = ({ children, className = "" }) => (
   <span
-    className={`tw-bg-sand/20 tw-text-white tw-text-sm urbanist tw-px-4 tw-py-1 tw-rounded-full tw-inline-flex tw-items-center tw-gap-2 ${className}`}
+    className={`tw-bg-primary/10 tw-text-primary tw-text-sm urbanist tw-px-4 tw-py-1 tw-rounded-full tw-inline-flex tw-items-center tw-gap-2 ${className}`}
   >
     {children}
   </span>

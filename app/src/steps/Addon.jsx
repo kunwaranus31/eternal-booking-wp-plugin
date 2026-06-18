@@ -40,16 +40,16 @@ export default function Addon() {
             />
           </div>
 
-          <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/10 tw-rounded-2xl tw-p-4 tw-flex tw-flex-col">
-            <h3 className="tw-text-2xl unna tw-text-white tw-mb-3">Add-on Options</h3>
+          <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/50 tw-rounded-2xl tw-p-4 tw-flex tw-flex-col">
+            <h3 className="tw-text-2xl unna tw-text-primary tw-mb-3">Add-on Options</h3>
 
             <div className="eb-scroll tw-flex-1 tw-space-y-2 tw-max-h-[430px] tw-overflow-auto tw-pr-2">
               {isLoading ? (
                 <div className="tw-flex tw-justify-center tw-py-8">
-                  <Spinner className="tw-w-6 tw-h-6 tw-text-white" />
+                  <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
                 </div>
               ) : !addonList?.length ? (
-                <p className="urbanist tw-text-white/80">No add-ons available.</p>
+                <p className="urbanist tw-text-primary/80">No add-ons available.</p>
               ) : (
                 addonList.map((addon, idx) => {
                   const active = selected === addon?._id;
@@ -59,7 +59,7 @@ export default function Addon() {
                       key={addon?._id}
                       onClick={() => toggle(addon?._id)}
                       className={`tw-w-full tw-flex tw-items-center tw-justify-between tw-gap-2 tw-p-3 tw-rounded-xl tw-text-left tw-transition tw-border-2 ${
-                        active ? "tw-bg-sand tw-border-white" : "tw-bg-white tw-border-sand"
+                        active ? "tw-bg-sand tw-border-primary" : "tw-bg-white tw-border-sand"
                       }`}
                     >
                       <div className="tw-flex tw-items-center tw-gap-3 tw-min-w-0">

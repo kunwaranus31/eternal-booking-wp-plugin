@@ -36,7 +36,7 @@ export default function PackagesDropdown({
   return (
     <div className="tw-w-full tw-min-w-0" ref={ref}>
       {title && (
-        <p className="urbanist tw-text-lg tw-text-white tw-mb-2">{title}</p>
+        <p className="urbanist tw-text-lg tw-text-primary tw-mb-2">{title}</p>
       )}
 
       {/* Header */}

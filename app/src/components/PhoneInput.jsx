@@ -27,12 +27,12 @@ export default function PhoneInput({ label, required, value, onChange, error, to
   return (
     <div className="tw-w-full">
       {label && (
-        <label className="tw-text-lg urbanist tw-font-semibold tw-text-white">
+        <label className="tw-text-lg urbanist tw-font-semibold tw-text-primary">
           {label}
-          {required && <span className="tw-text-white tw-ml-1">*</span>}
+          {required && <span className="tw-text-red tw-ml-1">*</span>}
         </label>
       )}
-      <div className="tw-w-full tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-rounded-md tw-bg-white/95 tw-mt-2">
+      <div className="tw-w-full tw-flex tw-items-center tw-gap-2 tw-px-3 tw-py-2 tw-rounded-md tw-bg-white tw-border tw-border-[#f0dcae] tw-mt-2">
         <img src={_images.canadaFlag} alt="CA" className="tw-w-6 tw-h-4 tw-object-contain" />
         <span className="tw-text-lg tw-text-black">+1</span>
         <span className="tw-h-5 tw-w-px tw-bg-black/20" />

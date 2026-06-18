@@ -47,37 +47,37 @@ export default function SelectPackage() {
 
         {/* Details */}
         <BrownPanel className="tw-w-full laptop:tw-w-1/2">
-          <h2 className="tw-text-3xl unna tw-text-white tw-capitalize tw-border-b tw-border-white/30 tw-pb-3">
+          <h2 className="tw-text-3xl unna tw-text-primary tw-capitalize tw-border-b tw-border-primary/30 tw-pb-3">
             {getField(service, "name")}
           </h2>
 
           <div className="tw-flex tw-gap-2 tw-flex-wrap tw-mt-3">
             <Pill>
-              <Clock className="tw-w-4 tw-h-4 tw-text-sand" />
+              <Clock className="tw-w-4 tw-h-4 tw-text-secondary" />
               {`${service?.duration} mins`}
             </Pill>
             <Pill>
-              <Hand className="tw-w-4 tw-h-4 tw-text-sand" />
+              <Hand className="tw-w-4 tw-h-4 tw-text-secondary" />
               {fourHand ? "Four-hand" : "Two-hand"}
             </Pill>
             <Pill>
               {fourHand ? (
-                <Users className="tw-w-4 tw-h-4 tw-text-sand" />
+                <Users className="tw-w-4 tw-h-4 tw-text-secondary" />
               ) : (
-                <User className="tw-w-4 tw-h-4 tw-text-sand" />
+                <User className="tw-w-4 tw-h-4 tw-text-secondary" />
               )}
               {fourHand ? "2 instructors" : "1 instructor"}
             </Pill>
           </div>
 
-          <p className="urbanist tw-text-white/90 tw-text-sm tw-mt-3">
+          <p className="urbanist tw-text-primary/90 tw-text-sm tw-mt-3">
             {getField(service, "description", "No description available")}
           </p>
 
           {/* Packages dropdown */}
           <div className="tw-mt-5">
             {packages.length === 0 ? (
-              <p className="urbanist tw-text-white tw-font-medium">
+              <p className="urbanist tw-text-primary tw-font-medium">
                 No packages available for this service.
               </p>
             ) : (

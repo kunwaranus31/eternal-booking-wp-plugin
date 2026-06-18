@@ -35,7 +35,7 @@ export default function Dropdown({
   return (
     <div className="tw-w-full" ref={ref}>
       {title && (
-        <p className="urbanist tw-text-lg tw-text-white tw-mb-1">{title}</p>
+        <p className="urbanist tw-text-lg tw-text-primary tw-mb-1">{title}</p>
       )}
 
       {/* Header */}

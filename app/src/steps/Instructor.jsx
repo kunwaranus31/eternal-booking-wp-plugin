@@ -53,17 +53,17 @@ export default function Instructor() {
             <ServiceSummary service={service} date={date} time={time} />
           </div>
 
-          <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/10 tw-rounded-2xl tw-p-4">
-            <h3 className="tw-text-2xl unna tw-text-white tw-mb-1">
+          <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/50 tw-rounded-2xl tw-p-4">
+            <h3 className="tw-text-2xl unna tw-text-primary tw-mb-1">
               Available {required > 1 ? "Instructors" : "Instructor"}
             </h3>
-            <p className="urbanist tw-text-sand tw-text-sm tw-mb-3">
+            <p className="urbanist tw-text-secondary tw-text-sm tw-mb-3">
               Select {required} {required > 1 ? "instructors" : "instructor"}.
             </p>
 
             {isLoading ? (
               <div className="tw-flex tw-justify-center tw-py-8">
-                <Spinner className="tw-w-6 tw-h-6 tw-text-white" />
+                <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
               </div>
             ) : availableInstructors?.length > 0 ? (
               <div className="eb-scroll tw-space-y-2 tw-max-h-96 tw-overflow-auto tw-pr-1">
@@ -74,7 +74,7 @@ export default function Instructor() {
                       key={inst?._id}
                       onClick={() => toggle(inst)}
                       className={`tw-w-full tw-flex tw-items-center tw-gap-4 tw-p-3 tw-rounded-xl tw-text-left tw-transition tw-border-2 ${
-                        active ? "tw-bg-sand tw-border-white" : "tw-bg-white tw-border-sand"
+                        active ? "tw-bg-sand tw-border-primary" : "tw-bg-white tw-border-sand"
                       }`}
                     >
                       <span className="tw-w-5 tw-h-5 tw-border-2 tw-border-primary tw-rounded-full tw-flex tw-items-center tw-justify-center tw-shrink-0">
@@ -101,7 +101,7 @@ export default function Instructor() {
                 })}
               </div>
             ) : (
-              <p className="urbanist tw-text-white/80">
+              <p className="urbanist tw-text-primary/80">
                 No instructors available for this slot.
               </p>
             )}

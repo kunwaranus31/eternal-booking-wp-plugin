@@ -192,11 +192,11 @@ export default function Checkout() {
         Review your details and pay securely.
       </p>
 
-      <BrownPanel className="tw-mt-6 tw-mx-auto tw-max-w-2xl tw-text-white">
-        <h2 className="tw-text-2xl unna tw-border-b tw-border-white/30 tw-pb-2 tw-text-white">
+      <BrownPanel className="tw-mt-6 tw-mx-auto tw-max-w-2xl tw-text-primary">
+        <h2 className="tw-text-2xl unna tw-border-b tw-border-primary/30 tw-pb-2 tw-text-primary">
           Booking Summary
         </h2>
-        <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4 tw-pb-3 tw-border-b tw-border-white/30">
+        <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4 tw-pb-3 tw-border-b tw-border-primary/30">
           {rows.map((r, i) => (
             <InfoRow key={i} title={r.title} text={r.text} fullWidth={i === rows.length - 1} />
           ))}
@@ -246,15 +246,15 @@ export default function Checkout() {
           <PriceRow label="Subtotal" value={convertToDollars(taxCalc.subtotal)} />
           <PriceRow label="TPS (5%)" value={convertToDollars(taxCalc.tps)} />
           <PriceRow label="TVQ (9.975%)" value={convertToDollars(taxCalc.tvq)} />
-          <div className="tw-flex tw-justify-between tw-pt-2 tw-border-t tw-border-white/30 tw-mt-2">
+          <div className="tw-flex tw-justify-between tw-pt-2 tw-border-t tw-border-primary/30 tw-mt-2">
             <span className="unna tw-text-xl">Total</span>
             <span className="unna tw-text-xl tw-font-bold">${convertToDollars(total)}</span>
           </div>
         </div>
 
         {/* Contact info */}
-        <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-white/30">
-          <h3 className="tw-text-xl unna tw-text-sand tw-mb-2">Contact Information</h3>
+        <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-primary/30">
+          <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">Contact Information</h3>
           <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4">
             {guestRows.map((r, i) => (
               <InfoRow key={i} title={r.title} text={r.text} fullWidth={i === guestRows.length - 1} />
@@ -276,8 +276,8 @@ export default function Checkout() {
         )}
 
         {/* Payment */}
-        <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-white/30">
-          <h3 className="tw-text-xl unna tw-text-sand tw-mb-2">Payment Method</h3>
+        <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-primary/30">
+          <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">Payment Method</h3>
           <GuestPaymentMethod
             guestEmail={guestInfo?.email}
             selectedMethod={selectedMethod}

@@ -139,7 +139,7 @@ export default function BookingDetails() {
         </div>
 
         <BrownPanel className="tw-w-full laptop:tw-w-1/2">
-          <h2 className="tw-text-2xl unna tw-text-white tw-border-b tw-border-white/30 tw-pb-2">
+          <h2 className="tw-text-2xl unna tw-text-primary tw-border-b tw-border-primary/30 tw-pb-2">
             Booking Summary
           </h2>
           <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4 tw-mt-2">
@@ -148,8 +148,8 @@ export default function BookingDetails() {
             ))}
           </div>
 
-          <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-white/30">
-            <h3 className="tw-text-xl unna tw-text-sand tw-mb-2">Your Details</h3>
+          <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-primary/30">
+            <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">Your Details</h3>
             <div className="tw-space-y-3">
               <Field
                 label="Full name"

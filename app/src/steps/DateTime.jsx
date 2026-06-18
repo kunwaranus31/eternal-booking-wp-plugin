@@ -40,18 +40,18 @@ export default function DateTime() {
             <ServiceSummary service={service} />
           </div>
 
-          <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/10 tw-rounded-2xl tw-p-4">
-            <h3 className="tw-text-2xl unna tw-text-white tw-mb-3">Select Date</h3>
+          <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/50 tw-rounded-2xl tw-p-4">
+            <h3 className="tw-text-2xl unna tw-text-primary tw-mb-3">Select Date</h3>
             <Calendar value={selectedDate} onChange={handlePickDate} />
 
             {selectedDate && (
               <div className="tw-mt-5">
-                <h3 className="tw-text-2xl unna tw-text-white tw-mb-3">
+                <h3 className="tw-text-2xl unna tw-text-primary tw-mb-3">
                   Select Time
                 </h3>
                 {isLoading ? (
                   <div className="tw-flex tw-justify-center tw-py-6">
-                    <Spinner className="tw-w-6 tw-h-6 tw-text-white" />
+                    <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
                   </div>
                 ) : availableSlots?.length > 0 ? (
                   <div className="tw-grid tw-grid-cols-2 laptop:tw-grid-cols-3 tw-gap-2">
@@ -66,7 +66,7 @@ export default function DateTime() {
                     ))}
                   </div>
                 ) : (
-                  <p className="urbanist tw-text-white/80">
+                  <p className="urbanist tw-text-primary/80">
                     No available slots for this date.
                   </p>
                 )}
