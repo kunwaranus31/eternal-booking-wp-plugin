@@ -13,7 +13,8 @@ export const bookingApi = {
   getAddons: () => client.get(endpoints.addon.getAddons),
 
   // Availability
-  getAvailableDates: () => client.get(endpoints.booking.getAvailableDates),
+  getAvailableDates: (serviceId) =>
+    client.get(endpoints.booking.getAvailableDates(serviceId)),
   getAvailableSlots: (body) => client.post(endpoints.booking.getAvailableSlots, body),
   getAvailableInstructors: (body) =>
     client.post(endpoints.booking.getAvailableInstructors, body),

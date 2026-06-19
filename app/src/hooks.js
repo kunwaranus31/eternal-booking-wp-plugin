@@ -64,12 +64,13 @@ export function useGetGuestPaymentMethods(email) {
 /* ── Availability ────────────────────────────────────── */
 // Platform-wide list of bookable dates (YYYY-MM-DD strings). Only these are
 // selectable on the calendar; everything else is hidden.
-export function useGetAvailableDates() {
+export function useGetAvailableDates(serviceId) {
   const query = useQuery({
-    queryKey: ["availableDates"],
+    queryKey: ["availableDates", serviceId],
+    enabled: !!serviceId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
-      const res = await bookingApi.getAvailableDates();
+      const res = await bookingApi.getAvailableDates(serviceId);
       if (!res?.data?.success) throw new Error("Failed to fetch available dates");
       return res.data.data; // array of date strings
     },

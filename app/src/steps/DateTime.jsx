@@ -11,7 +11,7 @@ import ServiceSummary from "@/components/ServiceSummary";
 export default function DateTime() {
   const { service, date, setDateTime, setInstructor, goTo, back } = useCheckout();
   const { getAvailableSlots, availableSlots, isLoading } = useGetAvailableSlots();
-  const { availableDates, isLoading: datesLoading } = useGetAvailableDates();
+  const { availableDates, isLoading: datesLoading } = useGetAvailableDates(service?._id);
 
   const [selectedDate, setSelectedDate] = useState(date || "");
 
@@ -109,8 +109,25 @@ function Calendar({ value, onChange, availableDates = [], loading }) {
 
   if (loading) {
     return (
-      <div className="tw-bg-white tw-rounded-xl tw-p-3">
-        <div className="tw-h-64 tw-bg-gray-medium/20 tw-rounded-lg tw-animate-pulse" />
+      <div className="tw-bg-white tw-rounded-xl tw-p-3 tw-animate-pulse">
+        {/* header */}
+        <div className="tw-flex tw-items-center tw-justify-between tw-mb-3">
+          <span className="tw-w-7 tw-h-7 tw-rounded-full tw-bg-gray-medium/30" />
+          <span className="tw-h-5 tw-w-32 tw-rounded tw-bg-gray-medium/30" />
+          <span className="tw-w-7 tw-h-7 tw-rounded-full tw-bg-gray-medium/30" />
+        </div>
+        {/* weekday row */}
+        <div className="tw-grid tw-grid-cols-7 tw-gap-1 tw-mb-1">
+          {Array.from({ length: 7 }).map((_, i) => (
+            <span key={i} className="tw-h-3 tw-w-3 tw-mx-auto tw-rounded tw-bg-gray-medium/30" />
+          ))}
+        </div>
+        {/* day cells */}
+        <div className="tw-grid tw-grid-cols-7 tw-gap-1">
+          {Array.from({ length: 42 }).map((_, i) => (
+            <span key={i} className="tw-h-9 tw-rounded-full tw-bg-gray-medium/20" />
+          ))}
+        </div>
       </div>
     );
   }
@@ -126,7 +143,8 @@ function Calendar({ value, onChange, availableDates = [], loading }) {
   const prevDisabled = cursor.clone().isSameOrBefore(moment(firstIso), "month");
   const nextDisabled = cursor.clone().isSameOrAfter(moment(lastIso), "month");
 
-  const startDay = cursor.clone().startOf("month").startOf("week");
+  // Monday-first grid (ISO week starts Monday).
+  const startDay = cursor.clone().startOf("month").startOf("isoWeek");
   const days = [];
   for (let i = 0; i < 42; i++) {
     days.push(startDay.clone().add(i, "days"));
@@ -152,7 +170,7 @@ function Calendar({ value, onChange, availableDates = [], loading }) {
         </button>
       </div>
       <div className="tw-grid tw-grid-cols-7 tw-text-center tw-text-xs tw-text-brown tw-mb-1">
-        {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+        {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
           <span key={i}>{d}</span>
         ))}
       </div>
