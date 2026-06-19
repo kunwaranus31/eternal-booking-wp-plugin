@@ -46,7 +46,7 @@ export default function Addon() {
 
             <div className="eb-scroll tw-flex-1 tw-space-y-2 tw-max-h-[430px] tw-overflow-auto tw-pr-4">
               {isLoading ? (
-                <RowSkeleton count={4} />
+                <RowSkeleton count={4} isAddon={true}/>
               ) : !addonList?.length ? (
                 <p className="urbanist tw-text-primary/80">No add-ons available.</p>
               ) : (

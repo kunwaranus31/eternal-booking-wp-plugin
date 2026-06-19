@@ -9,13 +9,13 @@ const Block = ({ className = "" }) => (
 );
 
 /* List rows — instructors / add-ons / saved cards. */
-export function RowSkeleton({ count = 4, image = true }) {
+export function RowSkeleton({ count = 4, image = true, isAddon }) {
   return (
     <div className="tw-space-y-2">
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="tw-flex tw-items-center tw-gap-3 tw-p-3 tw-rounded-xl tw-bg-white tw-border-2 tw-border-sand tw-animate-pulse"
+          className="tw-flex tw-items-center tw-gap-3 tw-p-3 tw-bg-white tw-border-2 tw-border-sand tw-animate-pulse"
         >
           <span className="tw-w-5 tw-h-5 tw-rounded-full tw-bg-gray-medium/30 tw-shrink-0" />
           {image && (
@@ -23,9 +23,9 @@ export function RowSkeleton({ count = 4, image = true }) {
           )}
           <div className="tw-flex-1 tw-space-y-2">
             <Block className="tw-h-4 tw-w-1/2" />
-            <Block className="tw-h-3 tw-w-1/3" />
+            {!isAddon && <Block className="tw-h-3 tw-w-1/3" />}
           </div>
-          <Block className="tw-h-5 tw-w-14 tw-shrink-0" />
+          {isAddon && <Block className="tw-h-5 tw-w-10 tw-shrink-0" />}
         </div>
       ))}
     </div>
@@ -37,10 +37,7 @@ export function TimeSlotSkeleton({ count = 6 }) {
   return (
     <div className="tw-grid tw-grid-cols-2 laptop:tw-grid-cols-3 tw-gap-2">
       {Array.from({ length: count }).map((_, i) => (
-        <div
-          key={i}
-          className="tw-h-9 tw-rounded-full tw-bg-gray-medium/30 tw-animate-pulse"
-        />
+        <div key={i} className="tw-h-9 tw-bg-gray-medium/30 tw-animate-pulse" />
       ))}
     </div>
   );
