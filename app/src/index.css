@@ -50,7 +50,7 @@
 #eternel-booking-root button {
   font-family: inherit;
   background: none;
-  cursor: pointer;
+  cursor: pointer !important;
   color: inherit;
 }
 

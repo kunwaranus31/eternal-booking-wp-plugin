@@ -25,7 +25,7 @@ export const Button = ({
 }) => (
   <button
     disabled={disabled || loading}
-    className={`tw-inline-flex tw-items-center tw-justify-center tw-gap-2 tw-rounded-full tw-px-6 tw-py-2.5 tw-font-medium urbanist tw-transition-colors tw-duration-200 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed ${VARIANTS[variant]} ${className}`}
+    className={`tw-inline-flex tw-items-center tw-justify-center tw-gap-2 tw-rounded-full tw-px-6 tw-py-2.5 tw-font-medium urbanist tw-cursor-pointer tw-transition-colors tw-duration-200 disabled:tw-opacity-50 disabled:tw-cursor-not-allowed ${VARIANTS[variant]} ${className}`}
     {...props}
   >
     {loading && <Loader2 className="tw-w-4 tw-h-4 tw-animate-spin" />}
@@ -72,7 +72,7 @@ export const Modal = ({ open, onClose, children, size = "md", showClose = true }
         {showClose && (
           <button
             onClick={onClose}
-            className="tw-absolute tw-top-3 tw-right-3 tw-text-primary hover:tw-opacity-70 tw-z-10"
+            className="tw-absolute tw-top-3 tw-right-3 tw-text-primary hover:tw-opacity-70 tw-cursor-pointer tw-z-10"
           >
             <X className="tw-w-5 tw-h-5" />
           </button>
@@ -85,23 +85,47 @@ export const Modal = ({ open, onClose, children, size = "md", showClose = true }
 };
 
 /* ── Labeled input (white field on brown panel) ──────── */
-export const Field = ({ label, error, touched, required, className = "", ...props }) => (
-  <div className="tw-w-full">
-    {label && (
-      <label className="tw-text-lg urbanist tw-font-semibold tw-text-primary">
-        {label}
-        {required && <span className="tw-text-red tw-ml-1">*</span>}
-      </label>
-    )}
-    <input
-      className={`tw-w-full tw-text-lg tw-px-4 tw-py-2 tw-rounded-md tw-text-black tw-bg-white focus:tw-outline-none tw-mt-2 tw-border tw-border-[#f0dcae] ${className}`}
-      {...props}
-    />
-    {touched && error && (
-      <p className="tw-text-red tw-text-xs tw-mt-1 tw-ml-1 tw-font-medium">{error}</p>
-    )}
-  </div>
-);
+export const Field = ({
+  label,
+  error,
+  touched,
+  required,
+  showCount = false,
+  maxLength,
+  value,
+  className = "",
+  ...props
+}) => {
+  const showFooter = showCount || (touched && error);
+  return (
+    <div className="tw-w-full">
+      {label && (
+        <label className="tw-text-lg urbanist tw-font-semibold tw-text-primary">
+          {label}
+          {required && <span className="tw-text-red tw-ml-1">*</span>}
+        </label>
+      )}
+      <input
+        value={value}
+        maxLength={maxLength}
+        className={`tw-w-full tw-text-lg tw-px-4 tw-py-2 tw-rounded-md tw-text-black tw-bg-white focus:tw-outline-none tw-mt-2 tw-border tw-border-[#f0dcae] ${className}`}
+        {...props}
+      />
+      {showFooter && (
+        <div className="tw-flex tw-justify-between tw-gap-2 tw-mt-1">
+          <span className="tw-text-red tw-text-xs tw-ml-1 tw-font-medium">
+            {touched && error ? error : ""}
+          </span>
+          {showCount && maxLength != null && (
+            <span className="urbanist tw-text-xs tw-text-primary/60 tw-shrink-0">
+              {(value?.length || 0)}/{maxLength}
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
 /* ── Info row (label + value) — matches ServiceInfoBox ─ */
 export const InfoRow = ({ title, text, fullWidth = false }) => (

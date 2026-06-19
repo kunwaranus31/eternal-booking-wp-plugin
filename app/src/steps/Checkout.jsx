@@ -270,7 +270,8 @@ export default function Checkout() {
               placeholder="Anything we should know?"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              maxLength={300}
+              maxLength={500}
+              showCount
             />
           </div>
         )}
