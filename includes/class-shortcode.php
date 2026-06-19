@@ -97,11 +97,27 @@ class Eternel_Booking_Shortcode {
 		$this->register_script();
 		wp_enqueue_script( self::HANDLE );
 
-		// Optional: [eternel_booking service="<id>"] renders just that one service
-		// and starts the flow from its card.
-		$atts    = shortcode_atts( array( 'service' => '' ), $atts, 'eternel_booking' );
+		// Optional: render just one service or one package and start the flow from
+		// its card:
+		//   [eternel_booking service="<id>"]   → single experience
+		//   [eternel_booking package="<id>"]   → single package group
+		$atts    = shortcode_atts(
+			array(
+				'service' => '',
+				'package' => '',
+			),
+			$atts,
+			'eternel_booking'
+		);
 		$service = sanitize_text_field( $atts['service'] );
-		$data    = $service ? ' data-service-id="' . esc_attr( $service ) . '"' : '';
+		$package = sanitize_text_field( $atts['package'] );
+		$data    = '';
+		if ( $service ) {
+			$data .= ' data-service-id="' . esc_attr( $service ) . '"';
+		}
+		if ( $package ) {
+			$data .= ' data-package-id="' . esc_attr( $package ) . '"';
+		}
 
 		$missing = ! get_option( ETERNEL_BOOKING_OPT_API ) || ! get_option( ETERNEL_BOOKING_OPT_STRIPE );
 		$notice  = '';

@@ -15,6 +15,7 @@ import {
 export const STEPS = {
   LISTING: "listing",
   SERVICE: "service", // single-service landing card (shortcode service="<id>")
+  PACKAGE: "package", // single-package landing card (shortcode package="<id>")
   BOOK_SLOT: "book-slot", // experience: session + summary
   DATE_TIME: "date-time",
   INSTRUCTOR: "instructor",
@@ -71,7 +72,11 @@ const loadPersisted = () => {
 
 const CheckoutContext = createContext(null);
 
-export const CheckoutProvider = ({ children, initialServiceId = null }) => {
+export const CheckoutProvider = ({
+  children,
+  initialServiceId = null,
+  initialPackageId = null,
+}) => {
   // Read persisted blob once (lazy init so localStorage is touched a single time).
   const [persisted] = useState(loadPersisted);
 
@@ -81,9 +86,13 @@ export const CheckoutProvider = ({ children, initialServiceId = null }) => {
     return { ...initialState, ...rest };
   });
 
-  // When a single-service shortcode is used, the flow starts on the SERVICE card
-  // instead of the full LISTING. This is the "home" step for reset/back.
-  const rootStep = initialServiceId ? STEPS.SERVICE : STEPS.LISTING;
+  // A single-service / single-package shortcode starts the flow on that landing
+  // card instead of the full LISTING. This is the "home" step for reset/back.
+  const rootStep = initialPackageId
+    ? STEPS.PACKAGE
+    : initialServiceId
+    ? STEPS.SERVICE
+    : STEPS.LISTING;
 
   // Step stack (for back navigation). Restore from storage so a refresh keeps
   // the user on the same step — but only if the saved stack belongs to this
@@ -167,15 +176,16 @@ export const CheckoutProvider = ({ children, initialServiceId = null }) => {
       back,
       resetTo,
       canGoBack: stack.length > 1,
-      // single-service mode
+      // single-service / single-package mode
       forcedServiceId: initialServiceId,
+      forcedPackageId: initialPackageId,
       rootStep,
       // modal
       modal,
       openModal,
       closeModal,
     }),
-    [state, step, stack.length, modal, patch, goTo, back, resetTo, resetCheckout, openModal, closeModal, initialServiceId, rootStep]
+    [state, step, stack.length, modal, patch, goTo, back, resetTo, resetCheckout, openModal, closeModal, initialServiceId, initialPackageId, rootStep]
   );
 
   return (

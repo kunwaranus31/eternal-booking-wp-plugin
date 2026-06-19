@@ -132,6 +132,12 @@ class Eternel_Booking_Settings {
 			<h2><?php echo esc_html__( 'Per-service shortcodes', 'eternel-booking' ); ?></h2>
 			<p><?php echo esc_html__( 'Use one of these on its own page to show just that single service. "Book Now" runs the same flow (including Single / Multiple Session).', 'eternel-booking' ); ?></p>
 			<?php $this->render_services_list(); ?>
+
+			<hr />
+			<h2><?php echo esc_html__( 'Per-package shortcodes', 'eternel-booking' ); ?></h2>
+			<p><?php echo esc_html__( 'Use one of these on its own page to show just that single package. "Book Now" runs the package flow (Choose Your Package → ...).', 'eternel-booking' ); ?></p>
+			<?php $this->render_packages_list(); ?>
+			<?php $this->render_copy_script(); ?>
 		</div>
 		<?php
 	}
@@ -187,6 +193,68 @@ class Eternel_Booking_Settings {
 		}
 
 		echo '</tbody></table>';
+	}
+
+	/**
+	 * Fetches package groups from the API and renders a copy-ready shortcode for
+	 * each. The package id used is the group's service id (groups are 1:1 with a
+	 * service), which the widget matches in PackagePage.
+	 */
+	private function render_packages_list() {
+		$api = get_option( ETERNEL_BOOKING_OPT_API, '' );
+		if ( ! $api ) {
+			echo '<p><em>' . esc_html__( 'Set the API Base URL above and save to load your packages here.', 'eternel-booking' ) . '</em></p>';
+			return;
+		}
+
+		$response = wp_remote_get(
+			trailingslashit( $api ) . 'package?includePrivate=false',
+			array( 'timeout' => 15 )
+		);
+
+		if ( is_wp_error( $response ) ) {
+			echo '<p style="color:#b32d2e;">' . esc_html( sprintf( /* translators: %s: error message */ __( 'Could not reach the API: %s', 'eternel-booking' ), $response->get_error_message() ) ) . '</p>';
+			return;
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( $code < 200 || $code >= 300 || empty( $body['data'] ) ) {
+			echo '<p style="color:#b32d2e;">' . esc_html__( 'No packages found, or the API returned an error.', 'eternel-booking' ) . '</p>';
+			return;
+		}
+
+		echo '<table class="widefat striped" style="max-width:780px;margin-top:10px;"><thead><tr>';
+		echo '<th>' . esc_html__( 'Package (service)', 'eternel-booking' ) . '</th>';
+		echo '<th>' . esc_html__( 'Shortcode', 'eternel-booking' ) . '</th>';
+		echo '</tr></thead><tbody>';
+
+		foreach ( $body['data'] as $group ) {
+			$service = isset( $group['service'] ) ? $group['service'] : array();
+			$id      = isset( $service['_id'] ) ? $service['_id'] : ( isset( $group['_id'] ) ? $group['_id'] : '' );
+			if ( ! $id ) {
+				continue;
+			}
+			$name      = $this->service_name( $service );
+			$shortcode = '[eternel_booking package="' . $id . '"]';
+			echo '<tr>';
+			echo '<td>' . esc_html( $name ) . '</td>';
+			echo '<td>';
+			echo '<input type="text" readonly value="' . esc_attr( $shortcode ) . '" onclick="this.select()" style="width:330px;font-family:monospace;" /> ';
+			echo '<button type="button" class="button eb-copy" data-shortcode="' . esc_attr( $shortcode ) . '">' . esc_html__( 'Copy', 'eternel-booking' ) . '</button>';
+			echo '</td>';
+			echo '</tr>';
+		}
+
+		echo '</tbody></table>';
+	}
+
+	/**
+	 * One-time clipboard handler bound to every .eb-copy button on the page
+	 * (covers both the services and packages tables).
+	 */
+	private function render_copy_script() {
 		?>
 		<script>
 		(function () {

@@ -1,6 +1,7 @@
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import Listing from "@/steps/Listing";
 import ServicePage from "@/steps/ServicePage";
+import PackagePage from "@/steps/PackagePage";
 import BookSlot from "@/steps/BookSlot";
 import DateTime from "@/steps/DateTime";
 import Instructor from "@/steps/Instructor";
@@ -14,6 +15,7 @@ import Voucher from "@/steps/Voucher";
 const STEP_COMPONENTS = {
   [STEPS.LISTING]: Listing,
   [STEPS.SERVICE]: ServicePage,
+  [STEPS.PACKAGE]: PackagePage,
   [STEPS.BOOK_SLOT]: BookSlot,
   [STEPS.DATE_TIME]: DateTime,
   [STEPS.INSTRUCTOR]: Instructor,
