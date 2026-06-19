@@ -61,7 +61,26 @@ export function useGetGuestPaymentMethods(email) {
   };
 }
 
-/* ── Availability mutations ──────────────────────────── */
+/* ── Availability ────────────────────────────────────── */
+// Platform-wide list of bookable dates (YYYY-MM-DD strings). Only these are
+// selectable on the calendar; everything else is hidden.
+export function useGetAvailableDates() {
+  const query = useQuery({
+    queryKey: ["availableDates"],
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      const res = await bookingApi.getAvailableDates();
+      if (!res?.data?.success) throw new Error("Failed to fetch available dates");
+      return res.data.data; // array of date strings
+    },
+    retry: false,
+  });
+  return {
+    availableDates: query.data || [],
+    isLoading: query.isPending,
+  };
+}
+
 export function useGetAvailableSlots() {
   const mutation = useMutation({
     mutationFn: async ({ serviceId, date }) => {

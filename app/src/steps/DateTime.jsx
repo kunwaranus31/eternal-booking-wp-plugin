@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import moment from "moment";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
-import { useGetAvailableSlots } from "@/hooks";
+import { useGetAvailableSlots, useGetAvailableDates } from "@/hooks";
 import { to24h } from "@/utils/helpers";
 import { BackButton, BrownPanel } from "@/components/ui";
 import { TimeSlotSkeleton } from "@/components/Skeleton";
@@ -11,6 +11,7 @@ import ServiceSummary from "@/components/ServiceSummary";
 export default function DateTime() {
   const { service, date, setDateTime, setInstructor, goTo, back } = useCheckout();
   const { getAvailableSlots, availableSlots, isLoading } = useGetAvailableSlots();
+  const { availableDates, isLoading: datesLoading } = useGetAvailableDates();
 
   const [selectedDate, setSelectedDate] = useState(date || "");
 
@@ -43,7 +44,12 @@ export default function DateTime() {
 
           <div className="tw-w-full laptop:tw-w-1/2 tw-bg-white/50 tw-rounded-2xl tw-p-4">
             <h3 className="tw-text-2xl unna tw-text-primary tw-mb-3">Select Date</h3>
-            <Calendar value={selectedDate} onChange={handlePickDate} />
+            <Calendar
+              value={selectedDate}
+              onChange={handlePickDate}
+              availableDates={availableDates}
+              loading={datesLoading}
+            />
 
             {selectedDate && (
               <div className="tw-mt-5">
@@ -78,18 +84,47 @@ export default function DateTime() {
   );
 }
 
-/* ── Calendar limited to the next 30 days (today → +30) ─ */
-function Calendar({ value, onChange }) {
-  const today = moment().startOf("day");
-  const minDate = today; // earliest selectable = today
-  const maxDate = today.clone().add(30, "days"); // latest selectable = +30 days
+/* ── Calendar driven by the backend's available dates ──
+   Only dates returned by /booking/available-dates are green & selectable;
+   every other day is hidden (invisible), and month navigation is bounded by
+   the first/last available date. */
+function Calendar({ value, onChange, availableDates = [], loading }) {
+  // Normalise to a YYYY-MM-DD lookup set (handles plain dates or ISO strings).
+  const availableSet = useMemo(
+    () => new Set((availableDates || []).map((d) => moment(d).format("YYYY-MM-DD"))),
+    [availableDates]
+  );
+  const sorted = useMemo(() => [...availableSet].sort(), [availableSet]);
+  const firstIso = sorted[0];
+  const lastIso = sorted[sorted.length - 1];
 
-  // The 30-day window can span the current + next month, so allow navigation
-  // ONLY between those months — nothing before minDate or after maxDate.
-  const [cursor, setCursor] = useState(today.clone().startOf("month"));
+  const [cursor, setCursor] = useState(() =>
+    moment(firstIso || undefined).startOf("month")
+  );
 
-  const prevDisabled = cursor.clone().isSameOrBefore(minDate, "month");
-  const nextDisabled = cursor.clone().isSameOrAfter(maxDate, "month");
+  // Jump to the first available month once the dates arrive.
+  useEffect(() => {
+    if (firstIso) setCursor(moment(firstIso).startOf("month"));
+  }, [firstIso]);
+
+  if (loading) {
+    return (
+      <div className="tw-bg-white tw-rounded-xl tw-p-3">
+        <div className="tw-h-64 tw-bg-gray-medium/20 tw-rounded-lg tw-animate-pulse" />
+      </div>
+    );
+  }
+
+  if (!sorted.length) {
+    return (
+      <div className="tw-bg-white tw-rounded-xl tw-p-4 tw-text-center">
+        <p className="urbanist tw-text-primary/80">No available dates right now.</p>
+      </div>
+    );
+  }
+
+  const prevDisabled = cursor.clone().isSameOrBefore(moment(firstIso), "month");
+  const nextDisabled = cursor.clone().isSameOrAfter(moment(lastIso), "month");
 
   const startDay = cursor.clone().startOf("month").startOf("week");
   const days = [];
@@ -123,24 +158,23 @@ function Calendar({ value, onChange }) {
       </div>
       <div className="tw-grid tw-grid-cols-7 tw-gap-1">
         {days.map((d) => {
-          const inMonth = d.month() === cursor.month();
-          const outOfRange = d.isBefore(minDate, "day") || d.isAfter(maxDate, "day");
           const iso = d.format("YYYY-MM-DD");
+          const inMonth = d.month() === cursor.month();
+          // A day is selectable only if the backend lists it (and it belongs to
+          // the visible month). Everything else is hidden.
+          const available = inMonth && availableSet.has(iso);
           const isSelected = value === iso;
-          const disabled = outOfRange || !inMonth;
           return (
             <button
               key={iso}
-              disabled={disabled}
-              onClick={() => onChange(iso)}
+              disabled={!available}
+              onClick={() => available && onChange(iso)}
               className={`tw-h-9 tw-rounded-full tw-text-sm tw-transition ${
-                !inMonth
+                !available
                   ? "tw-invisible"
                   : isSelected
                   ? "tw-bg-sand tw-text-primary tw-font-bold"
-                  : disabled
-                  ? "tw-text-grey/30 tw-cursor-not-allowed"
-                  : "tw-bg-green/15 hover:tw-bg-sand/60 tw-text-primary"
+                  : "tw-bg-green/15 hover:tw-bg-sand/60 tw-text-primary tw-cursor-pointer"
               }`}
             >
               {d.date()}

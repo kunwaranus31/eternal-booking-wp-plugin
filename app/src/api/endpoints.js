@@ -18,6 +18,7 @@ export const endpoints = {
   booking: {
     getAvailableSlots: "/booking/available-slots",
     getAvailableInstructors: "/booking/available-instructors-for-slot",
+    getAvailableDates: "/booking/available-dates",
     createBooking: "/booking",
     initiateGuest: "/booking/initiate-guest",
     verifyGuest: "/booking/verify-guest",
