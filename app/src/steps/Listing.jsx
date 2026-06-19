@@ -12,7 +12,7 @@ export default function Listing() {
 
   return (
     <div>
-      <h1 className="unna tw-text-3xl tablet:tw-text-4xl laptop:tw-text-5xl tw-text-center tw-text-secondary">
+      <h1 className="unna tw-text-3xl tablet:tw-text-4xl laptop:tw-text-5xl tw-text-center tw-text-primary">
         Book Your Experience
       </h1>
 
