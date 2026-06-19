@@ -3,7 +3,8 @@ import { CreditCard, Trash2, Plus } from "lucide-react";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "@/stripe";
 import { useGetGuestPaymentMethods, useDeleteGuestPaymentMethod } from "@/hooks";
-import { Button, Modal, Spinner } from "@/components/ui";
+import { Button, Modal } from "@/components/ui";
+import { RowSkeleton } from "@/components/Skeleton";
 import AddCardForm from "@/components/AddCardForm";
 
 /**
@@ -39,9 +40,7 @@ export default function GuestPaymentMethod({ guestEmail, selectedMethod, setSele
       <h4 className="tw-text-lg unna tw-mb-3">Select payment method</h4>
 
       {isLoading ? (
-        <div className="tw-flex tw-justify-center tw-py-6">
-          <Spinner className="tw-w-6 tw-h-6" />
-        </div>
+        <RowSkeleton count={2} image={false} />
       ) : !cards?.length ? (
         <div className="tw-text-center tw-py-4 tw-text-brown">
           <CreditCard className="tw-mx-auto tw-w-12 tw-h-12 tw-mb-2" />

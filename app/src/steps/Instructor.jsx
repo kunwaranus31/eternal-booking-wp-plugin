@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetAvailableInstructors } from "@/hooks";
 import { getField, isFourHand } from "@/utils/format";
-import { Button, BackButton, BrownPanel, Spinner } from "@/components/ui";
+import { Button, BackButton, BrownPanel } from "@/components/ui";
+import { RowSkeleton } from "@/components/Skeleton";
 import ServiceSummary from "@/components/ServiceSummary";
 import { _images } from "../assets";
 
@@ -62,9 +63,7 @@ export default function Instructor() {
             </p>
 
             {isLoading ? (
-              <div className="tw-flex tw-justify-center tw-py-8">
-                <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
-              </div>
+              <RowSkeleton count={4} />
             ) : availableInstructors?.length > 0 ? (
               <div className="eb-scroll tw-space-y-2 tw-h-80 tw-overflow-auto tw-pr-4">
                 {availableInstructors.map((inst) => {

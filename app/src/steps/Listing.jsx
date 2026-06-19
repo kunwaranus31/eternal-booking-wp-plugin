@@ -4,7 +4,8 @@ import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetServices, useGetPackages } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
 import { getField, firstImage, isFourHand } from "@/utils/format";
-import { Button, Loading } from "@/components/ui";
+import { Button } from "@/components/ui";
+import { CardGridSkeleton } from "@/components/Skeleton";
 
 export default function Listing() {
   const [tab, setTab] = useState("experiences");
@@ -57,7 +58,7 @@ function ExperiencesTab() {
   const { setService, setFlowType, setSession, setPackageType, goTo } =
     useCheckout();
 
-  if (isLoading) return <Loading label="Loading experiences..." />;
+  if (isLoading) return <CardGridSkeleton count={6} />;
   if (!services?.length)
     return <Empty text="No experiences available right now." />;
 
@@ -130,7 +131,7 @@ function PackagesTab() {
   const { packages, isLoading } = useGetPackages();
   const { setUserPackages, setFlowType, setPackageType, goTo } = useCheckout();
 
-  if (isLoading) return <Loading label="Loading packages..." />;
+  if (isLoading) return <CardGridSkeleton count={6} />;
   if (!packages?.length) return <Empty text="No packages available right now." />;
 
   const handleBook = (group) => {

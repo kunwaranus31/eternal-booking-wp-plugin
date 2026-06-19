@@ -3,7 +3,8 @@ import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetAddons } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
 import { getField, firstImage } from "@/utils/format";
-import { Button, BackButton, BrownPanel, Spinner } from "@/components/ui";
+import { Button, BackButton, BrownPanel } from "@/components/ui";
+import { RowSkeleton } from "@/components/Skeleton";
 import ServiceSummary from "@/components/ServiceSummary";
 import InfoTooltip from "@/components/InfoTooltip";
 
@@ -45,9 +46,7 @@ export default function Addon() {
 
             <div className="eb-scroll tw-flex-1 tw-space-y-2 tw-max-h-[430px] tw-overflow-auto tw-pr-4">
               {isLoading ? (
-                <div className="tw-flex tw-justify-center tw-py-8">
-                  <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
-                </div>
+                <RowSkeleton count={4} />
               ) : !addonList?.length ? (
                 <p className="urbanist tw-text-primary/80">No add-ons available.</p>
               ) : (

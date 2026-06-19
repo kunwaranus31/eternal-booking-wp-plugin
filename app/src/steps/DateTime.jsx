@@ -4,7 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetAvailableSlots } from "@/hooks";
 import { to24h } from "@/utils/helpers";
-import { BackButton, BrownPanel, Spinner } from "@/components/ui";
+import { BackButton, BrownPanel } from "@/components/ui";
+import { TimeSlotSkeleton } from "@/components/Skeleton";
 import ServiceSummary from "@/components/ServiceSummary";
 
 export default function DateTime() {
@@ -50,9 +51,7 @@ export default function DateTime() {
                   Select Time
                 </h3>
                 {isLoading ? (
-                  <div className="tw-flex tw-justify-center tw-py-6">
-                    <Spinner className="tw-w-6 tw-h-6 tw-text-primary" />
-                  </div>
+                  <TimeSlotSkeleton count={6} />
                 ) : availableSlots?.length > 0 ? (
                   <div className="tw-grid tw-grid-cols-2 laptop:tw-grid-cols-3 tw-gap-2">
                     {availableSlots.map((slot, i) => (

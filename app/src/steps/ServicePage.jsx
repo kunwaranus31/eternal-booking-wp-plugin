@@ -4,7 +4,8 @@ import { useCheckout, STEPS } from "@/context/CheckoutContext";
 import { useGetServices } from "@/hooks";
 import { convertToDollars } from "@/utils/helpers";
 import { getField, firstImage, isFourHand } from "@/utils/format";
-import { Button, Loading } from "@/components/ui";
+import { Button } from "@/components/ui";
+import { CardSkeleton } from "@/components/Skeleton";
 
 /**
  * Single-service landing — shown when the shortcode carries a service id
@@ -21,7 +22,12 @@ export default function ServicePage() {
     [services, forcedServiceId]
   );
 
-  if (isLoading) return <Loading label="Loading experience..." />;
+  if (isLoading)
+    return (
+      <div className="tw-max-w-md tw-mx-auto">
+        <CardSkeleton />
+      </div>
+    );
   if (!service)
     return (
       <div className="tw-text-center tw-py-16 tw-text-grey urbanist">
