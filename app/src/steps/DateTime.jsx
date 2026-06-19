@@ -160,8 +160,8 @@ function Calendar({ value, onChange, availableDates = [], loading }) {
         {days.map((d) => {
           const iso = d.format("YYYY-MM-DD");
           const inMonth = d.month() === cursor.month();
-          // A day is selectable only if the backend lists it (and it belongs to
-          // the visible month). Everything else is hidden.
+          // Only backend-listed days are selectable; other days of the month are
+          // shown greyed-out (not clickable). Days outside the month are hidden.
           const available = inMonth && availableSet.has(iso);
           const isSelected = value === iso;
           return (
@@ -170,11 +170,13 @@ function Calendar({ value, onChange, availableDates = [], loading }) {
               disabled={!available}
               onClick={() => available && onChange(iso)}
               className={`tw-h-9 tw-rounded-full tw-text-sm tw-transition ${
-                !available
+                !inMonth
                   ? "tw-invisible"
-                  : isSelected
-                  ? "tw-bg-sand tw-text-primary tw-font-bold"
-                  : "tw-bg-green/15 hover:tw-bg-sand/60 tw-text-primary tw-cursor-pointer"
+                  : available
+                  ? isSelected
+                    ? "tw-bg-sand tw-text-primary tw-font-bold"
+                    : "tw-bg-green/15 hover:tw-bg-sand/60 tw-text-primary tw-cursor-pointer"
+                  : "tw-text-grey/30 tw-cursor-not-allowed"
               }`}
             >
               {d.date()}
