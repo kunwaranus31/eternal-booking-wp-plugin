@@ -95,7 +95,7 @@ export default function AddCardForm({ onClose, guestEmail, onAdded }) {
         <Button variant="outline" type="button" onClick={onClose} disabled={loading}>
           Cancel
         </Button>
-        <Button variant="primary" type="submit" disabled={!isValid} loading={loading}>
+        <Button variant="primary" className="hover:tw-bg-primary" type="submit" disabled={!isValid} loading={loading}>
           Add Card
         </Button>
       </div>
