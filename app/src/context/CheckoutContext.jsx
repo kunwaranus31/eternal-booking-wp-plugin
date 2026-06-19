@@ -46,46 +46,72 @@ const initialState = {
   bookingResult: null, // { booking, appointment } returned by createBooking
 };
 
-const loadState = () => {
+const STEP_VALUES = new Set(Object.values(STEPS));
+
+// Read the whole persisted blob (booking data + step stack) once, honouring TTL.
+const loadPersisted = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return initialState;
+    if (!saved) return null;
     const parsed = JSON.parse(saved);
     if (parsed._timestamp && Date.now() - parsed._timestamp > TTL_MS) {
       localStorage.removeItem(STORAGE_KEY);
-      return initialState;
+      return null;
     }
-    const { _timestamp, ...rest } = parsed;
-    return { ...initialState, ...rest };
+    return parsed;
   } catch {
-    localStorage.removeItem(STORAGE_KEY);
-    return initialState;
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+    return null;
   }
 };
 
 const CheckoutContext = createContext(null);
 
 export const CheckoutProvider = ({ children, initialServiceId = null }) => {
-  const [state, setState] = useState(loadState);
+  // Read persisted blob once (lazy init so localStorage is touched a single time).
+  const [persisted] = useState(loadPersisted);
+
+  const [state, setState] = useState(() => {
+    if (!persisted) return initialState;
+    const { _timestamp, _stack, ...rest } = persisted;
+    return { ...initialState, ...rest };
+  });
 
   // When a single-service shortcode is used, the flow starts on the SERVICE card
   // instead of the full LISTING. This is the "home" step for reset/back.
   const rootStep = initialServiceId ? STEPS.SERVICE : STEPS.LISTING;
 
-  // Step stack (for back navigation). Starts at the root step on load.
-  const [stack, setStack] = useState([rootStep]);
+  // Step stack (for back navigation). Restore from storage so a refresh keeps
+  // the user on the same step — but only if the saved stack belongs to this
+  // entry point (same root) and contains only known steps.
+  const [stack, setStack] = useState(() => {
+    const saved = persisted?._stack;
+    if (Array.isArray(saved)) {
+      const cleaned = saved.filter((s) => STEP_VALUES.has(s));
+      if (cleaned.length && cleaned[0] === rootStep) return cleaned;
+    }
+    return [rootStep];
+  });
   const step = stack[stack.length - 1];
 
   // Lightweight modal state (replaces the separate ModalContext).
   const [modal, setModal] = useState({ type: null, data: null });
 
-  // Persist booking data (not the step) so a refresh keeps selections briefly.
+  // Persist booking data AND the step stack so a refresh restores both.
   useEffect(() => {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ ...state, _timestamp: Date.now() })
-    );
-  }, [state]);
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ ...state, _stack: stack, _timestamp: Date.now() })
+      );
+    } catch {
+      /* storage full / unavailable — non-fatal */
+    }
+  }, [state, stack]);
 
   const patch = useCallback((p) => setState((prev) => ({ ...prev, ...p })), []);
 
