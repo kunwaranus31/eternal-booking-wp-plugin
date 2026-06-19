@@ -7,7 +7,7 @@ const injected =
   (typeof window !== "undefined" && window.ETERNEL_BOOKING_CONFIG) || {};
 
 export const config = {
-  apiBaseUrl: injected.apiBaseUrl || "https://xt9t4npc-3013.inc1.devtunnels.ms",
+  apiBaseUrl: injected.apiBaseUrl || "https://backend.eternel-experience.testingdemoserver.online",
   stripeKey: injected.stripeKey || "",
   rootId: injected.rootId || "eternel-booking-root",
 };
