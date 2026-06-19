@@ -58,7 +58,7 @@ function ExperiencesTab() {
   const { setService, setFlowType, setSession, setPackageType, goTo } =
     useCheckout();
 
-  if (isLoading) return <CardGridSkeleton count={6} />;
+  if (isLoading) return <CardGridSkeleton count={3} />;
   if (!services?.length)
     return <Empty text="No experiences available right now." />;
 
@@ -131,7 +131,7 @@ function PackagesTab() {
   const { packages, isLoading } = useGetPackages();
   const { setUserPackages, setFlowType, setPackageType, goTo } = useCheckout();
 
-  if (isLoading) return <CardGridSkeleton count={6} />;
+  if (isLoading) return <CardGridSkeleton count={3} />;
   if (!packages?.length) return <Empty text="No packages available right now." />;
 
   const handleBook = (group) => {
