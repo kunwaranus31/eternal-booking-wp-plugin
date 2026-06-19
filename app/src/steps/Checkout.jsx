@@ -10,7 +10,13 @@ import {
 } from "@/utils/helpers";
 import { calculateTaxes, calculateTaxesWithDiscount } from "@/utils/tax";
 import { getField, isFourHand } from "@/utils/format";
-import { Button, BackButton, BrownPanel, InfoRow, Field } from "@/components/ui";
+import {
+  Button,
+  BackButton,
+  BrownPanel,
+  InfoRow,
+  Field,
+} from "@/components/ui";
 import GuestPaymentMethod from "@/components/GuestPaymentMethod";
 import ProcessingModal from "@/components/ProcessingModal";
 import { Modal } from "@/components/ui";
@@ -75,7 +81,11 @@ export default function Checkout() {
       return;
     }
     const bookingDetails = isPackage
-      ? { type: "package", amount: packageType?.price, packageId: packageType?._id }
+      ? {
+          type: "package",
+          amount: packageType?.price,
+          packageId: packageType?._id,
+        }
       : {
           type: "service",
           amount: (service?.price || 0) + addonsTotal - discount,
@@ -170,11 +180,26 @@ export default function Checkout() {
         title: "Add-on",
         text:
           addons?.length > 0
-            ? addons.map((a) => `${getField(a, "name")} (+$${convertToDollars(a?.price)})`).join(", ")
+            ? addons
+                .map(
+                  (a) =>
+                    `${getField(a, "name")} (+$${convertToDollars(a?.price)})`,
+                )
+                .join(", ")
             : "None",
       },
     ];
-  }, [isPackage, packageType, summaryService, service, date, time, instructor, addons, fourHand]);
+  }, [
+    isPackage,
+    packageType,
+    summaryService,
+    service,
+    date,
+    time,
+    instructor,
+    addons,
+    fourHand,
+  ]);
 
   const guestRows = [
     { title: "Name", text: guestInfo?.fullName || "-" },
@@ -198,7 +223,12 @@ export default function Checkout() {
         </h2>
         <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4 tw-pb-3 tw-border-b tw-border-primary/30">
           {rows.map((r, i) => (
-            <InfoRow key={i} title={r.title} text={r.text} fullWidth={i === rows.length - 1} />
+            <InfoRow
+              key={i}
+              title={r.title}
+              text={r.text}
+              fullWidth={i === rows.length - 1}
+            />
           ))}
 
           {/* Coupon */}
@@ -212,7 +242,11 @@ export default function Checkout() {
                   maxLength={15}
                   className="tw-flex-1 tw-rounded-lg tw-bg-white tw-text-primary tw-px-4 tw-py-2.5 tw-outline-none"
                 />
-                <Button variant="primary" loading={isApplyingCoupon} onClick={handleApplyCoupon}>
+                <Button
+                  variant="primary"
+                  loading={isApplyingCoupon}
+                  onClick={handleApplyCoupon}
+                >
                   Apply
                 </Button>
               </div>
@@ -236,28 +270,51 @@ export default function Checkout() {
 
         {/* Price breakdown */}
         <div className="tw-mt-3 tw-space-y-1">
-          <PriceRow label="Price" value={convertToDollars(isPackage ? packageType?.price : service?.price)} />
+          <PriceRow
+            label="Price"
+            value={convertToDollars(
+              isPackage ? packageType?.price : service?.price,
+            )}
+          />
           {addons?.length > 0 && (
             <PriceRow label="Add-ons" value={convertToDollars(addonsTotal)} />
           )}
           {discount > 0 && (
-            <PriceRow label="Discount" value={`-${convertToDollars(discount)}`} />
+            <PriceRow
+              label="Discount"
+              value={`-$${convertToDollars(discount)}`}
+            />
           )}
-          <PriceRow label="Subtotal" value={convertToDollars(taxCalc.subtotal)} />
+          <PriceRow
+            label="Subtotal"
+            value={convertToDollars(taxCalc.subtotal)}
+          />
           <PriceRow label="TPS (5%)" value={convertToDollars(taxCalc.tps)} />
-          <PriceRow label="TVQ (9.975%)" value={convertToDollars(taxCalc.tvq)} />
+          <PriceRow
+            label="TVQ (9.975%)"
+            value={convertToDollars(taxCalc.tvq)}
+          />
           <div className="tw-flex tw-justify-between tw-pt-2 tw-border-t tw-border-primary/30 tw-mt-2">
             <span className="unna tw-text-xl">Total</span>
-            <span className="unna tw-text-xl tw-font-bold">${convertToDollars(total)}</span>
+            <span className="unna tw-text-xl tw-font-bold">
+              ${convertToDollars(total)}
+            </span>
           </div>
         </div>
 
         {/* Contact info */}
         <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-primary/30">
-          <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">Contact Information</h3>
+          <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">
+            Contact Information
+          </h3>
           <div className="laptop:tw-grid laptop:tw-grid-cols-2 tw-gap-x-4">
             {guestRows.map((r, i) => (
-              <InfoRow key={i} title={r.title} text={r.text} fullWidth={i === guestRows.length - 1} />
+              <InfoRow
+                key={i}
+                title={r.title}
+                text={r.text}
+                fullWidth={i === guestRows.length - 1}
+              />
             ))}
           </div>
         </div>
@@ -278,7 +335,9 @@ export default function Checkout() {
 
         {/* Payment */}
         <div className="tw-mt-4 tw-pt-4 tw-border-t tw-border-primary/30">
-          <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">Payment Method</h3>
+          <h3 className="tw-text-xl unna tw-text-secondary tw-mb-2">
+            Payment Method
+          </h3>
           <GuestPaymentMethod
             guestEmail={guestInfo?.email}
             selectedMethod={selectedMethod}
@@ -298,14 +357,23 @@ export default function Checkout() {
       </BrownPanel>
 
       {/* Confirm modal */}
-      <Modal open={showConfirm} onClose={() => setShowConfirm(false)} size="sm" showClose={false}>
+      <Modal
+        open={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        size="sm"
+        showClose={false}
+      >
         <div className="tw-p-6 tw-text-center tw-text-primary">
           <h4 className="tw-text-xl unna tw-mb-2">Confirm payment</h4>
           <p className="urbanist tw-text-sm tw-text-brown tw-mb-5">
             You're about to pay ${convertToDollars(total)} for this booking.
           </p>
           <div className="tw-flex tw-flex-col phone:tw-flex-row tw-gap-3">
-            <Button variant="outline" className="tw-w-full" onClick={() => setShowConfirm(false)}>
+            <Button
+              variant="outline"
+              className="tw-w-full"
+              onClick={() => setShowConfirm(false)}
+            >
               Cancel
             </Button>
             <Button variant="primary" className="tw-w-full" onClick={handlePay}>
@@ -322,7 +390,9 @@ export default function Checkout() {
 
 const PriceRow = ({ label, value }) => (
   <div className="tw-flex tw-justify-between">
-    <span className="unna tw-text-lg">{label}</span>
-    <span className="unna tw-text-lg tw-font-bold">${value}</span>
-  </div>
+  <span className="unna tw-text-lg">{label}</span>
+  <span className="unna tw-text-lg tw-font-bold">
+    {label === "Discount" ? value : `$${value}`}
+  </span>
+</div>
 );
